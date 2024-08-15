@@ -3,7 +3,13 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { ClerkProvider } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, SignedOut, SignIn } from '@clerk/nextjs';
+import { isSignedIn } from '@/lib/auth';
+import { redirect } from 'next/navigation';
+import { auth } from '@clerk/nextjs/server';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { Navbar } from '@/components/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,9 +32,7 @@ export default function RootLayout({
             defaultTheme='system'
             enableSystem
             disableTransitionOnChange>
-            <header className='w-full flex justify-center items-center px-4 py-3 bg-base-100 dark:bg-base-300'>
-              <ThemeToggle />
-            </header>
+            <Navbar />
             {children}
           </ThemeProvider>
         </body>

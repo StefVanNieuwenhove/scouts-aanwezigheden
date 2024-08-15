@@ -3,9 +3,9 @@ services:
   scouts-db:
     image: postgres
     restart: always
-    container_name: template-db
+    container_name: scouts-db
     ports:
-      - 5432:5432
+      - 5433:5433
     environment:
       POSTGRES_PASSWORD: example
       PGDATA: /data/postgres
