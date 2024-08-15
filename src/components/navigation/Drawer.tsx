@@ -70,6 +70,11 @@ const Drawer = ({ role }: DrawerProps) => {
                   <Link href={'/aanwezigheden/jins'}>Jins</Link>
                 </Button>
               )}
+              {hasAcces('ADMIN') && (
+                <Button variant={'link'} onClick={() => setOpen(false)}>
+                  <Link href={'/leden'}>Leden</Link>
+                </Button>
+              )}
             </SignedIn>
           </SheetDescription>
         </SheetHeader>

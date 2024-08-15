@@ -1,7 +1,7 @@
 export type Roles =
   | 'KAPOENEN'
   | 'WOUTERS'
-  | 'JONNGGIVERS'
+  | 'JONGGIVERS'
   | 'GIVERS'
   | 'JINS'
   | 'GROEPSLEIDING'

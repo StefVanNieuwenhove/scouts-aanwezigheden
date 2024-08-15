@@ -14,10 +14,33 @@ datasource db {
 }
 
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
+model Member {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  group     Group
+  activities Activity[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("members")
+}
+
+model Activity {
+  id        String   @id @default(uuid())
+  name      String
+  Date      DateTime
+  members   Member[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("activities")
+}
+
+enum Group {
+  KAPOENEN
+  WOUTERS
+  JONGGIVERS
+  GIVERS
+  JINS
 }

@@ -1,4 +1,4 @@
-import { SignedIn, useSession } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
 
 export default async function Home() {
@@ -11,6 +11,9 @@ export default async function Home() {
         <p>for admin/groepsleiding = tab with overview for all groups</p>
         <p>other role = overview group</p>
       </SignedIn>
+      <SignedOut>
+        <p>component with login</p>
+      </SignedOut>
     </main>
   );
 }

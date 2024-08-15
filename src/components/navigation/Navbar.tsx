@@ -3,13 +3,13 @@ import { ThemeToggle } from '../ui/theme-toggle';
 import { SignedIn, SignedOut, SignOutButton, UserButton } from '@clerk/nextjs';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { currentUser } from '@clerk/nextjs/server';
 import { Roles } from '@/types/role';
 import Drawer from './Drawer';
+import { Separator } from '../ui/separator';
+import { getUserRole } from '@/lib/auth';
 
 const Navbar = async () => {
-  const user = await currentUser();
-  const role: Roles = user?.publicMetadata?.role as Roles;
+  const role = await getUserRole();
 
   const hasAcces = (access: Roles) => {
     if (role === 'ADMIN' || role === 'GROEPSLEIDING') return true;
@@ -40,7 +40,7 @@ const Navbar = async () => {
                 <Link href={'/aanwezigheden/wouters'}>Wouters</Link>
               </Button>
             )}
-            {hasAcces('JONNGGIVERS') && (
+            {hasAcces('JONGGIVERS') && (
               <Button>
                 <Link href={'/aanwezigheden/jonnggivers'}>Jonnggivers</Link>
               </Button>
@@ -53,6 +53,11 @@ const Navbar = async () => {
             {hasAcces('JINS') && (
               <Button>
                 <Link href={'/aanwezigheden/jins'}>Jins</Link>
+              </Button>
+            )}
+            {hasAcces('ADMIN') && (
+              <Button>
+                <Link href={'/leden'}>Leden</Link>
               </Button>
             )}
           </SignedIn>
@@ -72,6 +77,7 @@ const Navbar = async () => {
           <ThemeToggle />
         </div>
       </header>
+      <Separator />
     </>
   );
 };

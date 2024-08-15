@@ -2,13 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ui/theme-provider';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { ClerkProvider, SignedIn, SignedOut, SignIn } from '@clerk/nextjs';
-import { isSignedIn } from '@/lib/auth';
-import { redirect } from 'next/navigation';
-import { auth } from '@clerk/nextjs/server';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { ClerkProvider } from '@clerk/nextjs';
 import { Navbar } from '@/components/navigation';
 
 const inter = Inter({ subsets: ['latin'] });

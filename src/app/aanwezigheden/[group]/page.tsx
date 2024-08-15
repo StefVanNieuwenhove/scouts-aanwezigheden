@@ -1,20 +1,21 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { getUserRole } from '@/lib/auth';
+import { Roles } from '@/types/role';
 import { redirect } from 'next/navigation';
-import React from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Group } from '@prisma/client';
+import { getMembersByGroup } from '@/data-acces/members';
+import { OverviewMembers } from '@/components/layout';
 
 type AanwezighedenGroupPageProps = {
   params: {
-    group: string;
+    group: Roles;
   };
 };
 
 const AanwezighedenGroupPage = async ({
   params,
 }: AanwezighedenGroupPageProps) => {
-  const user = await currentUser();
-  const role: string = user?.publicMetadata?.role as string;
-
-  console.log(params.group, role);
+  const role = await getUserRole();
 
   if (
     role !== params.group.toUpperCase() &&
@@ -22,7 +23,36 @@ const AanwezighedenGroupPage = async ({
     role !== 'GROEPSLEIDING'
   )
     redirect('/');
-  return <div>page for group {params.group}</div>;
+
+  const members = await getMembersByGroup(params.group.toUpperCase() as Group);
+  return (
+    <main className='container mx-auto w-full'>
+      <Tabs defaultValue='overview' className='text-center mt-5'>
+        <TabsList>
+          <TabsTrigger value='overview' className='w-full'>
+            Overzicht
+          </TabsTrigger>
+          <TabsTrigger value='create' className='w-full'>
+            Maak nieuwe vergadering
+          </TabsTrigger>
+          <TabsTrigger value='update' className='w-full'>
+            Bewerk vergadering
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value='overview'>
+          <article className='prose prose-invert max-w-none'>
+            <OverviewMembers members={members} />
+          </article>
+        </TabsContent>
+        <TabsContent value='create'>
+          <p>create</p>
+        </TabsContent>
+        <TabsContent value='update'>
+          <p>update</p>
+        </TabsContent>
+      </Tabs>
+    </main>
+  );
 };
 
 export default AanwezighedenGroupPage;
