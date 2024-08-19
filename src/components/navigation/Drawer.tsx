@@ -55,7 +55,7 @@ const Drawer = ({ role }: DrawerProps) => {
                   <Link href={'/aanwezigheden/wouters'}>Wouters</Link>
                 </Button>
               )}
-              {hasAcces('JONNGGIVERS') && (
+              {hasAcces('JONGGIVERS') && (
                 <Button variant={'link'} onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/jonnggivers'}>Jonnggivers</Link>
                 </Button>

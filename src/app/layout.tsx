@@ -4,6 +4,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Navbar } from '@/components/navigation';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
             disableTransitionOnChange>
             <Navbar />
             {children}
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
