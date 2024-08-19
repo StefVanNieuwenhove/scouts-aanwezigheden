@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Group } from '@prisma/client';
 import { getMembersByGroup } from '@/data-acces/members';
 import { OverviewMembers } from '@/components/layout';
-import { AddActivity } from '@/components/forms';
+import { AddActivity, UpdateActivity } from '@/components/forms';
 
 type AanwezighedenGroupPageProps = {
   params: {
@@ -28,7 +28,7 @@ const AanwezighedenGroupPage = async ({
   const members = await getMembersByGroup(params.group.toUpperCase() as Group);
   return (
     <main className='container mx-auto w-full overflow-x-scroll'>
-      <Tabs defaultValue='create' className='text-center mt-5'>
+      <Tabs defaultValue='update' className='text-center mt-5'>
         <TabsList>
           <TabsTrigger value='overview' className='w-full'>
             Overzicht
@@ -51,7 +51,9 @@ const AanwezighedenGroupPage = async ({
           </article>
         </TabsContent>
         <TabsContent value='update'>
-          <p>update</p>
+          <article className='prose prose-invert max-w-none'>
+            <UpdateActivity members={members} />
+          </article>
         </TabsContent>
       </Tabs>
     </main>
