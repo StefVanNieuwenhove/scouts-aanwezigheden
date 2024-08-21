@@ -24,7 +24,9 @@ const Navbar = async () => {
         <span className='flex md:hidden'>
           <Drawer role={role} />
         </span>
-        <h1 className='text-2xl font-bold'>Scouts aanwezigheden</h1>
+        <h1 className='text-2xl font-bold text-center hidden md:flex'>
+          Scouts aanwezigheden
+        </h1>
         <nav className='hidden md:flex items-center justify-center gap-4'>
           <SignedIn>
             <Button>
@@ -62,7 +64,7 @@ const Navbar = async () => {
             )}
           </SignedIn>
         </nav>
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4 '>
           <SignedOut>
             <Button>
               <Link href='/sign-in'>Sign in</Link>

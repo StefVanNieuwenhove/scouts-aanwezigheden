@@ -28,8 +28,10 @@ const AanwezighedenGroupPage = async ({
   const members = await getMembersByGroup(params.group.toUpperCase() as Group);
   return (
     <main className='container mx-auto w-full overflow-x-scroll'>
-      <Tabs defaultValue='update' className='text-center mt-5'>
-        <TabsList>
+      <Tabs
+        defaultValue='update'
+        className='text-center mt-5 flex flex-col gap-5 md:gap-2 md:flex-row'>
+        <TabsList className='flex flex-col gap-5 md:gap-2 md:flex-row mt-10'>
           <TabsTrigger value='overview' className='w-full'>
             Overzicht
           </TabsTrigger>
@@ -40,7 +42,7 @@ const AanwezighedenGroupPage = async ({
             Bewerk vergadering
           </TabsTrigger>
         </TabsList>
-        <TabsContent value='overview'>
+        <TabsContent value='overview' className='md:mt-20'>
           <article className='prose prose-invert max-w-none'>
             <OverviewMembers members={members} />
           </article>

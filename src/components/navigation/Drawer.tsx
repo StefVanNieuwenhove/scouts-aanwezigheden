@@ -6,6 +6,7 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -13,8 +14,9 @@ import {
 import Link from 'next/link';
 import { Separator } from '../ui/separator';
 import { useState } from 'react';
-import { SignedIn } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignOutButton, UserButton } from '@clerk/nextjs';
 import { Roles } from '@/types/role';
+import { ThemeToggle } from '../ui/theme-toggle';
 
 type DrawerProps = {
   role: Roles;
@@ -40,42 +42,81 @@ const Drawer = ({ role }: DrawerProps) => {
         <SheetHeader>
           <SheetTitle>Welcome to Daily Planner !</SheetTitle>
           <Separator />
-          <SheetDescription className='flex flex-col gap-2 text-left'>
+          <SheetDescription className='flex flex-col gap-2 items-start'>
             <SignedIn>
-              <Button variant={'link'} onClick={() => setOpen(false)}>
+              <Button
+                variant={'outline'}
+                className='w-full'
+                onClick={() => setOpen(false)}>
                 <Link href={'/'}>Overzicht</Link>
               </Button>
               {hasAcces('KAPOENEN') && (
-                <Button variant={'link'} onClick={() => setOpen(false)}>
+                <Button
+                  variant={'outline'}
+                  className='w-full'
+                  onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/kapoenen'}>Kapoenen</Link>
                 </Button>
               )}
               {hasAcces('WOUTERS') && (
-                <Button variant={'link'} onClick={() => setOpen(false)}>
+                <Button
+                  variant={'outline'}
+                  className='w-full'
+                  onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/wouters'}>Wouters</Link>
                 </Button>
               )}
               {hasAcces('JONGGIVERS') && (
-                <Button variant={'link'} onClick={() => setOpen(false)}>
+                <Button
+                  variant={'outline'}
+                  className='w-full'
+                  onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/jonnggivers'}>Jonnggivers</Link>
                 </Button>
               )}
               {hasAcces('GIVERS') && (
-                <Button variant={'link'} onClick={() => setOpen(false)}>
+                <Button
+                  variant={'outline'}
+                  className='w-full'
+                  onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/givers'}>Givers</Link>
                 </Button>
               )}
               {hasAcces('JINS') && (
-                <Button variant={'link'} onClick={() => setOpen(false)}>
+                <Button
+                  variant={'outline'}
+                  className='w-full'
+                  onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/jins'}>Jins</Link>
                 </Button>
               )}
               {hasAcces('ADMIN') && (
-                <Button variant={'link'} onClick={() => setOpen(false)}>
+                <Button
+                  variant={'outline'}
+                  className='w-full'
+                  onClick={() => setOpen(false)}>
                   <Link href={'/leden'}>Leden</Link>
                 </Button>
               )}
+              <Separator />
             </SignedIn>
+            <SignedOut>
+              <Button variant={'outline'} className='w-full'>
+                <Link href='/sign-in'>Sign in</Link>
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <Button className='w-full'>
+                <SignOutButton />
+              </Button>
+            </SignedIn>
+            <Separator />
+            <div className='w-full flex justify-center items-center gap-2'>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+              <ThemeToggle />
+            </div>
           </SheetDescription>
         </SheetHeader>
       </SheetContent>
