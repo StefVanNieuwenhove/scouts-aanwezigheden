@@ -16,7 +16,7 @@ type OverviewMembersProps = {
 
 const OverviewMembers = ({ members }: OverviewMembersProps) => {
   return (
-    <Table>
+    <Table className='border'>
       <TableHeader className='bg-primary'>
         <TableRow>
           <TableHead className='text-center text-primary-foreground'>

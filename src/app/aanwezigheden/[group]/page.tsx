@@ -6,6 +6,7 @@ import { Group } from '@prisma/client';
 import { getMembersByGroup } from '@/data-acces/members';
 import { OverviewMembers } from '@/components/layout';
 import { AddActivity, UpdateActivity } from '@/components/forms';
+import { TableLoader } from '@/components/loaders';
 
 type AanwezighedenGroupPageProps = {
   params: {
@@ -28,10 +29,8 @@ const AanwezighedenGroupPage = async ({
   const members = await getMembersByGroup(params.group.toUpperCase() as Group);
   return (
     <main className='container mx-auto w-full overflow-x-scroll'>
-      <Tabs
-        defaultValue='update'
-        className='text-center mt-5 flex flex-col gap-5 md:gap-2 md:flex-row'>
-        <TabsList className='flex flex-col gap-5 md:gap-2 md:flex-row mt-10'>
+      <Tabs defaultValue='update'>
+        <TabsList className='mt-10 border w-full'>
           <TabsTrigger value='overview' className='w-full'>
             Overzicht
           </TabsTrigger>
@@ -42,18 +41,18 @@ const AanwezighedenGroupPage = async ({
             Bewerk vergadering
           </TabsTrigger>
         </TabsList>
-        <TabsContent value='overview' className='md:mt-20'>
-          <article className='prose prose-invert max-w-none'>
+        <TabsContent value='overview' className=''>
+          <article className='prose prose-invert max-w-none mt-10'>
             <OverviewMembers members={members} />
           </article>
         </TabsContent>
         <TabsContent value='create'>
-          <article className='prose prose-invert max-w-none'>
+          <article className='prose prose-invert max-w-none mt-10'>
             <AddActivity members={members} />
           </article>
         </TabsContent>
         <TabsContent value='update'>
-          <article className='prose prose-invert max-w-none'>
+          <article className='prose prose-invert max-w-none mt-10'>
             <UpdateActivity members={members} />
           </article>
         </TabsContent>
