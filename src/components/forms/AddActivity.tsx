@@ -87,8 +87,10 @@ const AddActivity = ({ members }: AddActivityProps) => {
                   autoFocus
                 />
               </FormControl>
-              <div className='w-full flex items-center justify-center gap-2'>
-                <FormDescription>De naam van de activiteit</FormDescription>
+              <div className='w-full flex items-center justify-between gap-2'>
+                <FormDescription className='text-xs'>
+                  De naam van de activiteit
+                </FormDescription>
                 <FormMessage>{form.formState.errors.name?.message}</FormMessage>
               </div>
             </FormItem>
@@ -125,9 +127,9 @@ const AddActivity = ({ members }: AddActivityProps) => {
                   />
                 </PopoverContent>
               </Popover>
-              <div className='w-full flex items-center justify-center gap-2'>
-                <FormDescription>
-                  Your date of birth is used to calculate your age.
+              <div className='w-full flex items-center justify-between gap-2'>
+                <FormDescription className='text-xs'>
+                  De datum van de activiteit
                 </FormDescription>
                 <FormMessage />
               </div>
@@ -138,10 +140,10 @@ const AddActivity = ({ members }: AddActivityProps) => {
           control={form.control}
           name='members'
           render={({ field }) => (
-            <FormItem>
+            <FormItem className='max-w-prose mx-auto'>
               <FormLabel htmlFor={field.name}>Naam</FormLabel>
               <FormControl>
-                <Table className='max-w-prose mx-auto text-center border'>
+                <Table className='mx-auto border'>
                   <TableHeader className='bg-primary'>
                     <TableRow>
                       <TableHead className='flex items-center justify-center text-primary-foreground'>
@@ -156,7 +158,9 @@ const AddActivity = ({ members }: AddActivityProps) => {
                     {members
                       ?.sort((a, b) => a.firstName.localeCompare(b.firstName))
                       .map((member) => (
-                        <TableRow key={member.id} className='cursor-pointer'>
+                        <TableRow
+                          key={member.id}
+                          className='cursor-pointer text-center'>
                           <TableCell
                             onClick={() => {
                               console.log(field.value);

@@ -41,7 +41,7 @@ const AanwezighedenGroupPage = async ({
             Bewerk vergadering
           </TabsTrigger>
         </TabsList>
-        <TabsContent value='overview' className=''>
+        <TabsContent value='overview'>
           <article className='prose prose-invert max-w-none mt-10'>
             <OverviewMembers members={members} />
           </article>

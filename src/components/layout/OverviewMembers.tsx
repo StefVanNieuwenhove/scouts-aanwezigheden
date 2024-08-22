@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -36,7 +35,7 @@ const OverviewMembers = ({ members }: OverviewMembersProps) => {
             return b.activities.length - a.activities.length;
           })
           .map((member) => (
-            <TableRow key={member.id}>
+            <TableRow key={member.id} className='text-center'>
               <TableCell>
                 {member.firstName} {member.lastName}
               </TableCell>
