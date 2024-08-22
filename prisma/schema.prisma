@@ -31,6 +31,7 @@ model Activity {
   name      String
   date      DateTime @default(now())
   members   Member[]
+  group     Group
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -43,12 +43,18 @@ const AanwezighedenGroupPage = async ({
         </TabsList>
         <TabsContent value='overview'>
           <article className='prose prose-invert max-w-none mt-10'>
-            <OverviewMembers members={members} />
+            <OverviewMembers
+              members={members}
+              group={params.group.toUpperCase() as Group}
+            />
           </article>
         </TabsContent>
         <TabsContent value='create'>
           <article className='prose prose-invert max-w-none mt-10'>
-            <AddActivity members={members} />
+            <AddActivity
+              members={members}
+              group={params.group.toUpperCase() as Group}
+            />
           </article>
         </TabsContent>
         <TabsContent value='update'>

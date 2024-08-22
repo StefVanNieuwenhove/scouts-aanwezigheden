@@ -36,24 +36,25 @@ import {
 } from '../ui/table';
 import { Checkbox } from '../ui/checkbox';
 import { toast } from 'sonner';
+import { Group } from '@prisma/client';
 
 type AddActivityProps = {
   members: MemberWithActivities[] | null;
+  group: Group;
 };
-const AddActivity = ({ members }: AddActivityProps) => {
+const AddActivity = ({ members, group }: AddActivityProps) => {
   const form = useForm<z.infer<typeof addActivityValidation>>({
     resolver: zodResolver(addActivityValidation),
     defaultValues: {
       name: '',
       date: new Date(),
-      members: [''],
+      members: [],
     },
   });
 
   const onSubmit = async (data: z.infer<typeof addActivityValidation>) => {
     try {
-      console.log(data);
-      const result = await addActivity(data);
+      const result = await addActivity({ ...data, group });
       if (result.status === 'error') {
         toast.error(result.message);
       } else {
@@ -62,7 +63,7 @@ const AddActivity = ({ members }: AddActivityProps) => {
       form.reset({
         name: '',
         date: new Date(),
-        members: [''],
+        members: [],
       });
     } catch (error) {
       toast.error('Er is een fout opgetreden');
