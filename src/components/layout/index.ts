@@ -1,1 +1,1 @@
-export { default as OverviewMembers } from './OverviewMembers';
+export { default as DeleteActivityButton } from './DeleteActivityButton';

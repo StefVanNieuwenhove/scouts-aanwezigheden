@@ -3,7 +3,8 @@ import { MemberWithActivities } from '@/types/member';
 import { Group } from '@prisma/client';
 
 export const getMembersByGroup = async (
-  group: Group
+  group: Group,
+  includeActivities: boolean = true
 ): Promise<MemberWithActivities[] | null> => {
   try {
     if (!group) return null;
@@ -12,7 +13,7 @@ export const getMembersByGroup = async (
         group: group,
       },
       include: {
-        activities: true,
+        activities: includeActivities,
       },
     });
     return members;

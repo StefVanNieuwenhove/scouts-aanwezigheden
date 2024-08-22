@@ -70,8 +70,6 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
     }
   };
 
-  console.log(form.getValues());
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -142,15 +140,20 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
           name='members'
           render={({ field }) => (
             <FormItem className='max-w-prose mx-auto'>
-              <FormLabel htmlFor={field.name}>Naam</FormLabel>
+              <div className='flex justify-between items-center'>
+                <FormLabel htmlFor={field.name}>Naam</FormLabel>
+                <p className='text-xs text-gray-400'>
+                  Selecteerd de leden die aanwezig zijn
+                </p>
+              </div>
               <FormControl>
-                <Table className='mx-auto border'>
+                <Table className='mx-auto border dark:border-none'>
                   <TableHeader className='bg-primary'>
                     <TableRow>
-                      <TableHead className='flex items-center justify-center text-primary-foreground'>
+                      <TableHead className='flex items-center justify-center text-white dark:text-white'>
                         <CheckCheck />
                       </TableHead>
-                      <TableHead className='text-center text-primary-foreground'>
+                      <TableHead className='text-center text-white dark:text-white'>
                         Naam
                       </TableHead>
                     </TableRow>

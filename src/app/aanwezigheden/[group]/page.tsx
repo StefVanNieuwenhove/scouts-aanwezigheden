@@ -1,70 +1,64 @@
-import { getUserRole } from '@/lib/auth';
-import { Roles } from '@/types/role';
-import { redirect } from 'next/navigation';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Group } from '@prisma/client';
+import { getCountActivitiesByGroup } from '@/data-acces/activities';
 import { getMembersByGroup } from '@/data-acces/members';
-import { OverviewMembers } from '@/components/layout';
-import { AddActivity, UpdateActivity } from '@/components/forms';
-import { TableLoader } from '@/components/loaders';
+import { Group } from '@prisma/client';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
-type AanwezighedenGroupPageProps = {
-  params: {
-    group: Roles;
-  };
+type AanwezighedenOverviewPageProps = {
+  params: { group: Group };
 };
 
-const AanwezighedenGroupPage = async ({
+const AanwezighedenOverviewPage = async ({
   params,
-}: AanwezighedenGroupPageProps) => {
-  const role = await getUserRole();
-
-  if (
-    role !== params.group.toUpperCase() &&
-    role !== 'ADMIN' &&
-    role !== 'GROEPSLEIDING'
-  )
-    redirect('/');
-
+}: AanwezighedenOverviewPageProps) => {
   const members = await getMembersByGroup(params.group.toUpperCase() as Group);
+  const countActivities = await getCountActivitiesByGroup(
+    params.group.toUpperCase() as Group
+  );
   return (
-    <main className='container mx-auto w-full overflow-x-scroll'>
-      <Tabs defaultValue='update'>
-        <TabsList className='mt-10 border w-full'>
-          <TabsTrigger value='overview' className='w-full'>
-            Overzicht
-          </TabsTrigger>
-          <TabsTrigger value='create' className='w-full'>
-            Maak nieuwe vergadering
-          </TabsTrigger>
-          <TabsTrigger value='update' className='w-full'>
-            Bewerk vergadering
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value='overview'>
-          <article className='prose prose-invert max-w-none mt-10'>
-            <OverviewMembers
-              members={members}
-              group={params.group.toUpperCase() as Group}
-            />
-          </article>
-        </TabsContent>
-        <TabsContent value='create'>
-          <article className='prose prose-invert max-w-none mt-10'>
-            <AddActivity
-              members={members}
-              group={params.group.toUpperCase() as Group}
-            />
-          </article>
-        </TabsContent>
-        <TabsContent value='update'>
-          <article className='prose prose-invert max-w-none mt-10'>
-            <UpdateActivity members={members} />
-          </article>
-        </TabsContent>
-      </Tabs>
-    </main>
+    <>
+      <div className='w-full text-right text-sm text-gray-400'>
+        Aantal vergaderingen: {countActivities}
+      </div>
+      <Table className='border dark:border-none'>
+        <TableHeader className='bg-primary'>
+          <TableRow>
+            <TableHead className='text-center text-white dark:text-white'>
+              Naam
+            </TableHead>
+            <TableHead className='text-center text-white dark:text-white'>
+              # vergaderingen
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {members
+            ?.sort((a, b) => {
+              if (a.activities.length === b.activities.length) {
+                return a.firstName.localeCompare(b.firstName);
+              }
+              return b.activities.length - a.activities.length;
+            })
+            .map((member) => (
+              <TableRow key={member.id} className='text-center'>
+                <TableCell>
+                  {member.firstName} {member.lastName}
+                </TableCell>
+                <TableCell>{member.activities.length}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+        <TableCaption>Aantal leden: {members?.length}</TableCaption>
+      </Table>
+    </>
   );
 };
 
-export default AanwezighedenGroupPage;
+export default AanwezighedenOverviewPage;
