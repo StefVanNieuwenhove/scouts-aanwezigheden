@@ -3,8 +3,7 @@
 import prisma from '@/lib/prisma';
 import { ActivityWithMembers } from '@/types/activity';
 import { AddActivityProps, FormResponse } from '@/types/form';
-import { Activity, Group } from '@prisma/client';
-import { ca } from 'date-fns/locale';
+import { Group } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export const getActivityById = async (

@@ -1,18 +1,59 @@
-import { SignedIn, SignedOut, useSession } from '@clerk/nextjs';
+import { OverviewCard } from '@/components/layout';
+import { Button } from '@/components/ui/button';
+import { getMemebers } from '@/data-acces/members';
+import { hasAcces } from '@/lib/auth';
+import { Roles } from '@/types/role';
+import { Protect, SignedIn, SignedOut } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
+import Link from 'next/link';
 
 export default async function Home() {
+  const members = await getMemebers();
   const user = await currentUser();
-  const role: string = user?.publicMetadata?.role as string;
+  const role = user?.publicMetadata?.role as Roles;
   return (
-    <main className='flex min-h-screen flex-col  items-center  p-24'>
+    <main className='container mx-auto w-full flex min-h-screen flex-col items-center p-24'>
       <SignedIn>
-        <p>component with overview</p>
-        <p>for admin/groepsleiding = tab with overview for all groups</p>
-        <p>other role = overview group</p>
+        <section className='w-full flex flex-col gap-4'>
+          <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
+            <OverviewCard
+              group={'KAPOENEN'}
+              members={members?.filter((member) => member.group === 'KAPOENEN')}
+            />
+          </Protect>
+          <Protect condition={() => hasAcces(role, 'WOUTERS')}>
+            <OverviewCard
+              group={'WOUTERS'}
+              members={members?.filter((member) => member.group === 'WOUTERS')}
+            />
+          </Protect>
+          <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
+            <OverviewCard
+              group={'JONGGIVERS'}
+              members={members?.filter(
+                (member) => member.group === 'JONGGIVERS'
+              )}
+            />
+          </Protect>
+          <Protect condition={() => hasAcces(role, 'GIVERS')}>
+            <OverviewCard
+              group={'GIVERS'}
+              members={members?.filter((member) => member.group === 'GIVERS')}
+            />
+          </Protect>
+          <Protect condition={() => hasAcces(role, 'JINS')}>
+            <OverviewCard
+              group={'JINS'}
+              members={members?.filter((member) => member.group === 'JINS')}
+            />
+          </Protect>
+        </section>
       </SignedIn>
       <SignedOut>
-        <p>component with login</p>
+        <h2 className='text-2xl'>Log in to continue</h2>
+        <Button>
+          <Link href='/login'>Sign in</Link>
+        </Button>
       </SignedOut>
     </main>
   );

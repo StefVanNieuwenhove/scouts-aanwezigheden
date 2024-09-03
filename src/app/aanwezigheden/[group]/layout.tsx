@@ -19,7 +19,7 @@ const AanwezighedenLayout = ({ children, params }: AanwezigheidLayoutProps) => {
   return (
     <>
       <main className='container mx-auto w-full overflow-x-scroll mt-1'>
-        <div className='w-full flex justify-center gap-4 items-center  border-gray-200 py-4'>
+        <div className='w-full flex flex-col md:flex-row justify-center gap-1 md:gap-4 items-center  border-gray-200 py-4'>
           <Button
             variant={
               pathname === `/aanwezigheden/${params.group}`

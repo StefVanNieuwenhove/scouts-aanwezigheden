@@ -10,3 +10,11 @@ export const getUserRole = async (): Promise<Roles> => {
   const user = await currentUser();
   return user?.publicMetadata?.role as Roles;
 };
+
+export const hasAcces = (role: Roles, access: Roles) => {
+  if (role === 'ADMIN' || role === 'GROEPSLEIDING') return true;
+  if (role === access) {
+    return true;
+  }
+  return false;
+};

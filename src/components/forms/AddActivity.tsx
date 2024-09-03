@@ -72,7 +72,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='pb-10'>
         <FormField
           control={form.control}
           name='name'
@@ -106,7 +106,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
                   <FormControl>
                     <Button variant={'outline'}>
                       {field.value ? (
-                        format(field.value, 'P', { locale: nlBE })
+                        format(field.value, 'dd/MM/yyyy', { locale: nlBE })
                       ) : (
                         <span>Pick a date</span>
                       )}

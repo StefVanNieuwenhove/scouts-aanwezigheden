@@ -6,7 +6,6 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -14,22 +13,22 @@ import {
 import Link from 'next/link';
 import { Separator } from '../ui/separator';
 import { useState } from 'react';
-import { SignedIn, SignedOut, SignOutButton, UserButton } from '@clerk/nextjs';
+import {
+  Protect,
+  SignedIn,
+  SignedOut,
+  SignOutButton,
+  UserButton,
+} from '@clerk/nextjs';
 import { Roles } from '@/types/role';
 import { ThemeToggle } from '../ui/theme-toggle';
+import { hasAcces } from '@/lib/auth';
 
 type DrawerProps = {
   role: Roles;
 };
 
 const Drawer = ({ role }: DrawerProps) => {
-  const hasAcces = (access: Roles) => {
-    if (role === 'ADMIN' || role === 'GROEPSLEIDING') return true;
-    if (role === access) {
-      return true;
-    }
-    return false;
-  };
   const [open, setOpen] = useState(false);
   return (
     <Sheet open={open} onOpenChange={() => setOpen(!open)}>
@@ -40,7 +39,9 @@ const Drawer = ({ role }: DrawerProps) => {
       </SheetTrigger>
       <SheetContent side={'left'}>
         <SheetHeader>
-          <SheetTitle>Welcome to Daily Planner !</SheetTitle>
+          <SheetTitle className='text-xl text-center uppercase'>
+            Scouts aanwezigheden
+          </SheetTitle>
           <Separator />
           <SheetDescription className='flex flex-col gap-2 items-start'>
             <SignedIn>
@@ -50,54 +51,54 @@ const Drawer = ({ role }: DrawerProps) => {
                 onClick={() => setOpen(false)}>
                 <Link href={'/'}>Overzicht</Link>
               </Button>
-              {hasAcces('KAPOENEN') && (
+              <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
                 <Button
                   variant={'outline'}
                   className='w-full'
                   onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/kapoenen'}>Kapoenen</Link>
                 </Button>
-              )}
-              {hasAcces('WOUTERS') && (
+              </Protect>
+              <Protect condition={() => hasAcces(role, 'WOUTERS')}>
                 <Button
                   variant={'outline'}
                   className='w-full'
                   onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/wouters'}>Wouters</Link>
                 </Button>
-              )}
-              {hasAcces('JONGGIVERS') && (
+              </Protect>
+              <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
                 <Button
                   variant={'outline'}
                   className='w-full'
                   onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/jonnggivers'}>Jonnggivers</Link>
                 </Button>
-              )}
-              {hasAcces('GIVERS') && (
+              </Protect>
+              <Protect condition={() => hasAcces(role, 'GIVERS')}>
                 <Button
                   variant={'outline'}
                   className='w-full'
                   onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/givers'}>Givers</Link>
                 </Button>
-              )}
-              {hasAcces('JINS') && (
+              </Protect>
+              <Protect condition={() => hasAcces(role, 'JINS')}>
                 <Button
                   variant={'outline'}
                   className='w-full'
                   onClick={() => setOpen(false)}>
                   <Link href={'/aanwezigheden/jins'}>Jins</Link>
                 </Button>
-              )}
-              {hasAcces('ADMIN') && (
+              </Protect>
+              <Protect condition={() => hasAcces(role, 'ADMIN')}>
                 <Button
                   variant={'outline'}
                   className='w-full'
                   onClick={() => setOpen(false)}>
                   <Link href={'/leden'}>Leden</Link>
                 </Button>
-              )}
+              </Protect>
               <Separator />
             </SignedIn>
             <SignedOut>

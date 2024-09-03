@@ -22,3 +22,17 @@ export const getMembersByGroup = async (
     return null;
   }
 };
+
+export const getMemebers = async (): Promise<MemberWithActivities[] | null> => {
+  try {
+    const members = await prisma.member.findMany({
+      include: {
+        activities: true,
+      },
+    });
+    return members;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

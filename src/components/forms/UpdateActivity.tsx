@@ -49,7 +49,7 @@ const UpdateActivity = ({
 
   return (
     <>
-      <div className='grid grid-cols-2 gap-4'>
+      <div className='grid grid-cols-2 gap-4 mb-20'>
         <div>
           <h3 className='text-xl font-bold text-center underline'>Aanwezig</h3>
           <ul className='flex flex-col gap-1 w-full overflow-x-scroll'>
