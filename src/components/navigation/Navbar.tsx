@@ -13,6 +13,7 @@ import { Roles } from '@/types/role';
 import Drawer from './Drawer';
 import { Separator } from '../ui/separator';
 import { getUserRole, hasAcces } from '@/lib/auth';
+import NavLink from './NavLink';
 
 const Navbar = async () => {
   const role = await getUserRole();
@@ -28,34 +29,25 @@ const Navbar = async () => {
         </h1>
         <nav className='hidden md:flex items-center justify-center gap-4'>
           <SignedIn>
-            <Button>
-              <Link href={'/'}>Overzicht</Link>
-            </Button>
+            <NavLink name='Overzicht' href={'/'} />
           </SignedIn>
           <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
-            <Button>
-              <Link href={'/aanwezigheden/kapoenen'}>Kapoenen</Link>
-            </Button>
+            <NavLink name='Kapoenen' href={'/aanwezigheden/kapoenen'} />
           </Protect>
           <Protect condition={() => hasAcces(role, 'WOUTERS')}>
-            <Button>
-              <Link href={'/aanwezigheden/wouters'}>Wouters</Link>
-            </Button>
+            <NavLink name='Wouters' href={'/aanwezigheden/wouters'} />
           </Protect>
           <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
-            <Button>
-              <Link href={'/aanwezigheden/jonnggivers'}>Jonnggivers</Link>
-            </Button>
+            <NavLink name='Jonnggivers' href={'/aanwezigheden/jonnggivers'} />
           </Protect>
           <Protect condition={() => hasAcces(role, 'GIVERS')}>
-            <Button>
-              <Link href={'/aanwezigheden/givers'}>Givers</Link>
-            </Button>
+            <NavLink name='Givers' href={'/aanwezigheden/givers'} />
           </Protect>
           <Protect condition={() => hasAcces(role, 'JINS')}>
-            <Button>
-              <Link href={'/aanwezigheden/jins'}>Jins</Link>
-            </Button>
+            <NavLink name='Jins' href={'/aanwezigheden/jins'} />
+          </Protect>
+          <Protect condition={() => hasAcces(role, 'GROEPSLEIDING')}>
+            <NavLink name='Leden' href={'/leden'} />
           </Protect>
         </nav>
 

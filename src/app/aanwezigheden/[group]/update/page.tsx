@@ -1,10 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from '@/components/ui/card';
-import { getActivitiesByGroup } from '@/data-acces/activities';
 import { Group } from '@prisma/client';
 
 type AanwezighedenUpdatePageProps = {

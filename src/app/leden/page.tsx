@@ -1,11 +1,16 @@
-import { getUserRole } from '@/lib/auth';
-import { redirect } from 'next/navigation';
-import React from 'react';
+//'use client';
 
-const LedenPage = async () => {
-  const role = await getUserRole();
-  if (role !== 'ADMIN') redirect('/');
-  return <main className='container mx-auto'>LedenPage</main>;
+import { Table } from '@/components/ui/table';
+import { getMembers } from '@/data-acces/members';
+
+const LedenOverzichtPage = async () => {
+  const members = await getMembers();
+
+  return (
+    <>
+      <Table></Table>
+    </>
+  );
 };
 
-export default LedenPage;
+export default LedenOverzichtPage;

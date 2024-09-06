@@ -23,6 +23,7 @@ import {
 import { Roles } from '@/types/role';
 import { ThemeToggle } from '../ui/theme-toggle';
 import { hasAcces } from '@/lib/auth';
+import NavLink from './NavLink';
 
 type DrawerProps = {
   role: Roles;
@@ -44,63 +45,65 @@ const Drawer = ({ role }: DrawerProps) => {
           </SheetTitle>
           <Separator />
           <SheetDescription className='flex flex-col gap-2 items-start'>
-            <SignedIn>
-              <Button
-                variant={'outline'}
-                className='w-full'
-                onClick={() => setOpen(false)}>
-                <Link href={'/'}>Overzicht</Link>
-              </Button>
-              <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
-                <Button
-                  variant={'outline'}
-                  className='w-full'
-                  onClick={() => setOpen(false)}>
-                  <Link href={'/aanwezigheden/kapoenen'}>Kapoenen</Link>
-                </Button>
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'WOUTERS')}>
-                <Button
-                  variant={'outline'}
-                  className='w-full'
-                  onClick={() => setOpen(false)}>
-                  <Link href={'/aanwezigheden/wouters'}>Wouters</Link>
-                </Button>
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
-                <Button
-                  variant={'outline'}
-                  className='w-full'
-                  onClick={() => setOpen(false)}>
-                  <Link href={'/aanwezigheden/jonnggivers'}>Jonnggivers</Link>
-                </Button>
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'GIVERS')}>
-                <Button
-                  variant={'outline'}
-                  className='w-full'
-                  onClick={() => setOpen(false)}>
-                  <Link href={'/aanwezigheden/givers'}>Givers</Link>
-                </Button>
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'JINS')}>
-                <Button
-                  variant={'outline'}
-                  className='w-full'
-                  onClick={() => setOpen(false)}>
-                  <Link href={'/aanwezigheden/jins'}>Jins</Link>
-                </Button>
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'ADMIN')}>
-                <Button
-                  variant={'outline'}
-                  className='w-full'
-                  onClick={() => setOpen(false)}>
-                  <Link href={'/leden'}>Leden</Link>
-                </Button>
-              </Protect>
-              <Separator />
-            </SignedIn>
+            <div className='flex flex-col gap-2 items-start w-full'>
+              <SignedIn>
+                <NavLink
+                  name='Overzicht'
+                  href={'/'}
+                  onClose={() => setOpen(false)}
+                  fullWidth
+                />
+                <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
+                  <NavLink
+                    name='Kapoenen'
+                    href={'/aanwezigheden/kapoenen'}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                  />
+                </Protect>
+                <Protect condition={() => hasAcces(role, 'WOUTERS')}>
+                  <NavLink
+                    name='Wouters'
+                    href={'/aanwezigheden/wouters'}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                  />
+                </Protect>
+                <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
+                  <NavLink
+                    name='Jonnggivers'
+                    href={'/aanwezigheden/jonnggivers'}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                  />
+                </Protect>
+                <Protect condition={() => hasAcces(role, 'GIVERS')}>
+                  <NavLink
+                    name='Givers'
+                    href={'/aanwezigheden/givers'}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                  />
+                </Protect>
+                <Protect condition={() => hasAcces(role, 'JINS')}>
+                  <NavLink
+                    name='Jins'
+                    href={'/aanwezigheden/jins'}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                  />
+                </Protect>
+                <Protect condition={() => hasAcces(role, 'ADMIN')}>
+                  <NavLink
+                    name='Leden'
+                    href={'/leden'}
+                    onClose={() => setOpen(false)}
+                    fullWidth
+                  />
+                </Protect>
+                <Separator />
+              </SignedIn>
+            </div>
             <SignedOut>
               <Button variant={'outline'} className='w-full'>
                 <Link href='/sign-in'>Sign in</Link>
