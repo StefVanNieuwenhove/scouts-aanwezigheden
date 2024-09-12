@@ -9,7 +9,6 @@ import {
 } from '@clerk/nextjs';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { Roles } from '@/types/role';
 import Drawer from './Drawer';
 import { Separator } from '../ui/separator';
 import { getUserRole, hasAcces } from '@/lib/auth';
@@ -38,7 +37,7 @@ const Navbar = async () => {
             <NavLink name='Wouters' href={'/aanwezigheden/wouters'} />
           </Protect>
           <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
-            <NavLink name='Jonnggivers' href={'/aanwezigheden/jonnggivers'} />
+            <NavLink name='Jonggivers' href={'/aanwezigheden/jonggivers'} />
           </Protect>
           <Protect condition={() => hasAcces(role, 'GIVERS')}>
             <NavLink name='Givers' href={'/aanwezigheden/givers'} />

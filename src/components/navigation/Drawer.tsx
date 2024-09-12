@@ -71,8 +71,8 @@ const Drawer = ({ role }: DrawerProps) => {
                 </Protect>
                 <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
                   <NavLink
-                    name='Jonnggivers'
-                    href={'/aanwezigheden/jonnggivers'}
+                    name='Jonggivers'
+                    href={'/aanwezigheden/jonggivers'}
                     onClose={() => setOpen(false)}
                     fullWidth
                   />
