@@ -1,15 +1,7 @@
 import { getCountActivitiesByGroup } from '@/data-acces/activities';
 import { getMembersByGroup } from '@/data-acces/members';
 import { Group } from '@prisma/client';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { AanwezighedenCols, DataTable } from '@/components/table';
 
 type AanwezighedenOverviewPageProps = {
   params: { group: Group };
@@ -24,39 +16,15 @@ const AanwezighedenOverviewPage = async ({
   );
   return (
     <>
-      <div className='w-full text-right text-sm text-gray-400'>
-        Aantal vergaderingen: {countActivities}
+      <div className='w-full flex justify-between items-center text-sm text-gray-400'>
+        <p>Aantal leden: {members?.length}</p>
+        <p>Aantal vergaderingen: {countActivities}</p>
       </div>
-      <Table className='border dark:border-none'>
-        <TableHeader className='bg-primary'>
-          <TableRow>
-            <TableHead className='text-center text-white dark:text-white'>
-              Naam
-            </TableHead>
-            <TableHead className='text-center text-white dark:text-white'>
-              # vergaderingen
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {members
-            ?.sort((a, b) => {
-              if (a.activities.length === b.activities.length) {
-                return a.firstName.localeCompare(b.firstName);
-              }
-              return b.activities.length - a.activities.length;
-            })
-            .map((member) => (
-              <TableRow key={member.id} className='text-center'>
-                <TableCell>
-                  {member.firstName} {member.lastName}
-                </TableCell>
-                <TableCell>{member.activities.length}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-        <TableCaption>Aantal leden: {members?.length}</TableCaption>
-      </Table>
+      {members ? (
+        <DataTable data={members} columns={AanwezighedenCols} />
+      ) : (
+        <p>Geen leden gevonden</p>
+      )}
     </>
   );
 };
