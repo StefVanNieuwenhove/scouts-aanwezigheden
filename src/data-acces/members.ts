@@ -1,11 +1,14 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { convertToGroup } from '@/lib/utils';
 import { FormResponse } from '@/types/form';
-import { MemberTable, MemberWithActivities } from '@/types/member';
-import { Group, Member } from '@prisma/client';
-import fs from 'fs';
+import {
+  MemberTable,
+  MemberWithActivities,
+  UploadMember,
+} from '@/types/member';
+import { Group } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export const getMembers = async (): Promise<MemberTable[] | null> => {
   try {
@@ -55,22 +58,15 @@ export const getMemebers = async (): Promise<MemberWithActivities[] | null> => {
 };
 
 export const uploadMembersByFile = async (
-  file: File
+  members: UploadMember[]
 ): Promise<FormResponse> => {
   try {
-    console.log(file.webkitRelativePath);
-    const csv = fs.readFileSync(file.webkitRelativePath, 'utf8');
-    const parsed = csv.split('\n');
-
-    const members = parsed.map((line) => {
-      const [firstName, lastName, group] = line.split(',');
-      return {
-        firstName: firstName,
-        lastName: lastName,
-        group: convertToGroup(group),
-      };
+    await prisma.member.createMany({
+      data: members,
+      skipDuplicates: true,
     });
-    console.log(members);
+
+    revalidatePath('/leden');
     return { status: 'success', message: 'Succesvol geüpload' };
   } catch (error) {
     console.error(error);

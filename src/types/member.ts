@@ -21,3 +21,9 @@ export type MemberTable = {
   lastName: Member['lastName'];
   group: Group;
 };
+
+export type UploadMember = {
+  firstName: string;
+  lastName: string;
+  group: Group;
+};
