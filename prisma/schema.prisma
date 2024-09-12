@@ -44,4 +44,5 @@ enum Group {
   JONGGIVERS
   GIVERS
   JINS
+  UNKNOWN
 }
