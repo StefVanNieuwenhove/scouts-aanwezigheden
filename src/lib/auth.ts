@@ -12,7 +12,7 @@ export const getUserRole = async (): Promise<Roles> => {
 };
 
 export const hasAcces = (role: Roles, access: Roles) => {
-  if (role === 'ADMIN' || role === 'GROEPSLEIDING') return true;
+  if (role === 'GROEPSLEIDING') return true;
   if (role === access) {
     return true;
   }

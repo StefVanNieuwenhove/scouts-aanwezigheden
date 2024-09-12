@@ -35,8 +35,8 @@ import {
   TableRow,
 } from '../ui/table';
 import { Checkbox } from '../ui/checkbox';
-import { toast } from 'sonner';
 import { Group } from '@prisma/client';
+import { toast } from 'sonner';
 
 type AddActivityProps = {
   members: MemberWithActivities[] | null;
@@ -87,7 +87,10 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
                 />
               </FormControl>
               <div className='w-full flex items-center justify-between gap-2'>
-                <FormDescription className='text-xs'>
+                <FormDescription
+                  className={`text-xs ${
+                    form.formState.errors.name ? 'text-red-500' : ''
+                  }`}>
                   De naam van de activiteit
                 </FormDescription>
                 <FormMessage>{form.formState.errors.name?.message}</FormMessage>
@@ -127,10 +130,12 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
                 </PopoverContent>
               </Popover>
               <div className='w-full flex items-center justify-between gap-2'>
-                <FormDescription className='text-xs'>
+                <FormDescription
+                  className={`text-xs ${
+                    form.formState.errors.name ? 'text-red-500' : ''
+                  }`}>
                   De datum van de activiteit
                 </FormDescription>
-                <FormMessage />
               </div>
             </FormItem>
           )}
@@ -165,12 +170,19 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
                         <TableRow
                           key={member.id}
                           className='cursor-pointer text-center'>
-                          <TableCell
-                            onClick={() => {
-                              console.log(field.value);
-                              field.onChange([...field.value, member.id]);
-                            }}>
-                            <Checkbox />
+                          <TableCell>
+                            <Checkbox
+                              checked={field.value.includes(member.id)}
+                              onCheckedChange={(isChecked) => {
+                                if (isChecked) {
+                                  field.onChange([...field.value, member.id]);
+                                } else {
+                                  field.onChange(
+                                    field.value.filter((id) => id !== member.id)
+                                  );
+                                }
+                              }}
+                            />
                           </TableCell>
                           <TableCell>
                             {member.firstName + ' ' + member.lastName}
@@ -180,6 +192,15 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
                   </TableBody>
                 </Table>
               </FormControl>
+              <div className='w-full flex items-center justify-between gap-2'>
+                <FormDescription
+                  className={`text-xs ${
+                    form.formState.errors.name ? 'text-red-500' : ''
+                  }`}>
+                  Selecteerd de leden die aanwezig zijn
+                </FormDescription>
+                <FormMessage />
+              </div>
             </FormItem>
           )}
         />
@@ -188,13 +209,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
             type='reset'
             variant={'outline'}
             className='w-full'
-            onClick={() =>
-              form.reset({
-                name: '',
-                date: new Date(),
-                members: [''],
-              })
-            }>
+            onClick={() => form.reset()}>
             Reset
           </Button>
           <Button type='submit' className='w-full'>

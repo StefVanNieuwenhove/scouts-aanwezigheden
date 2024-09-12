@@ -29,16 +29,18 @@ const AanwezighedenUpdateLayoutPage = async ({
         Scroll om andere activiteiten te zien
       </span>
       <ul className='w-full flex gap-1 overflow-scroll'>
-        {activities
-          .sort((a, b) => b.date.getTime() - a.date.getTime())
-          .map((activity) => (
-            <li key={activity.id}>
-              <Link
-                href={`/aanwezigheden/${params.group}/update/${activity.id}`}>
+        {activities.length ? (
+          activities
+            .sort((a, b) => b.date.getTime() - a.date.getTime())
+            .map((activity) => (
+              <li key={activity.id}>
                 <Card className='w-full hover:bg-gray-100'>
                   <CardHeader className='w-full flex flex-row items-baseline justify-between gap-2'>
                     <CardTitle className='text-xl font-bold hover:underline w-full truncate'>
-                      {activity.name}
+                      <Link
+                        href={`/aanwezigheden/${params.group}/update/${activity.id}`}>
+                        {activity.name}
+                      </Link>
                     </CardTitle>
                     <DeleteActivityButton
                       activity={activity}
@@ -54,9 +56,11 @@ const AanwezighedenUpdateLayoutPage = async ({
                     </CardDescription>
                   </CardContent>
                 </Card>
-              </Link>
-            </li>
-          ))}
+              </li>
+            ))
+        ) : (
+          <li>Geen activiteiten gevonden</li>
+        )}
       </ul>
       <Separator className='my-1' />
       {children}
