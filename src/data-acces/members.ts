@@ -13,7 +13,7 @@ import { revalidatePath } from 'next/cache';
 export const getMembersTable = async (): Promise<MemberTable[] | null> => {
   try {
     const members = await prisma.member.findMany({
-      orderBy: [{ firstName: 'asc' }, { lastName: 'asc' }, { group: 'asc' }],
+      orderBy: [{ group: 'asc' }, { firstName: 'asc' }, { lastName: 'asc' }],
     });
     return members;
   } catch (error) {

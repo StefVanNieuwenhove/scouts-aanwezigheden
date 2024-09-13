@@ -5,7 +5,11 @@ const LedenOverzichtPage = async () => {
   const members = await getMembersTable();
 
   return (
-    <>{members && <DataTable data={members} columns={MembersOverviewCols} />}</>
+    <>
+      {members && (
+        <DataTable data={members} columns={MembersOverviewCols} groupFilter />
+      )}
+    </>
   );
 };
 
