@@ -21,7 +21,11 @@ const AanwezighedenOverviewPage = async ({
         <p>Aantal vergaderingen: {countActivities}</p>
       </div>
       {members ? (
-        <DataTable data={members} columns={AanwezighedenCols} />
+        <DataTable
+          data={members}
+          columns={AanwezighedenCols}
+          groupFilter={false}
+        />
       ) : (
         <p>Geen leden gevonden</p>
       )}
