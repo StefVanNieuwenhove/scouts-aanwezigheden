@@ -26,12 +26,10 @@ type YearOverviewChartProps = {
 };
 
 const YearOverviewChart = ({ data, config }: YearOverviewChartProps) => {
-  console.log(data);
-
   return (
     <ChartContainer
       config={config}
-      className='w-full mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground'>
+      className='w-full aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground'>
       <LineChart
         accessibilityLayer
         data={data}
