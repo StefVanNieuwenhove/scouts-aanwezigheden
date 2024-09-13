@@ -115,7 +115,7 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
                 Jaar overzicht
               </TabsTrigger>
             </TabsList>
-            <TabsContent value='evaluation' className='w-full h-full pt-2'>
+            <TabsContent value='evaluation' className='pt-2'>
               {activities.length ? (
                 <EvaluationChart
                   data={evaluationChartData}
@@ -128,7 +128,7 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
                 </p>
               )}
             </TabsContent>
-            <TabsContent value='year' className='w-full h-full pt-2'>
+            <TabsContent value='year' className='pt-2'>
               {activities.length ? (
                 <YearOverviewChart
                   data={yearOverviewChartData}
