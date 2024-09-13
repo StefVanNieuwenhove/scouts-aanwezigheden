@@ -2,7 +2,6 @@
 
 import { Trash2 } from 'lucide-react';
 import { Button } from '../ui/button';
-import { deleteActivityById } from '@/data-acces/activities';
 import { toast } from 'sonner';
 import {
   AlertDialog,
