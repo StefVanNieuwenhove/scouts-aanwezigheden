@@ -5,6 +5,7 @@ import { hasAcces } from '@/lib/auth';
 import { Roles } from '@/types/role';
 import { Protect, SignedIn, SignedOut } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
+import { Group } from '@prisma/client';
 import Link from 'next/link';
 
 export default async function Home() {
@@ -12,24 +13,24 @@ export default async function Home() {
   const user = await currentUser();
   const role = user?.publicMetadata?.role as Roles;
   return (
-    <main className='container mx-auto w-full flex min-h-screen flex-col items-center p-24'>
+    <main className='container mx-auto w-full flex min-h-screen flex-col items-center my-2'>
       <SignedIn>
         <section className='w-full flex flex-col gap-4'>
           <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
             <OverviewCard
-              group={'KAPOENEN'}
+              group={Group.KAPOENEN}
               members={members?.filter((member) => member.group === 'KAPOENEN')}
             />
           </Protect>
           <Protect condition={() => hasAcces(role, 'WOUTERS')}>
             <OverviewCard
-              group={'WOUTERS'}
+              group={Group.WOUTERS}
               members={members?.filter((member) => member.group === 'WOUTERS')}
             />
           </Protect>
           <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
             <OverviewCard
-              group={'JONGGIVERS'}
+              group={Group.JONGGIVERS}
               members={members?.filter(
                 (member) => member.group === 'JONGGIVERS'
               )}
@@ -37,13 +38,13 @@ export default async function Home() {
           </Protect>
           <Protect condition={() => hasAcces(role, 'GIVERS')}>
             <OverviewCard
-              group={'GIVERS'}
+              group={Group.GIVERS}
               members={members?.filter((member) => member.group === 'GIVERS')}
             />
           </Protect>
           <Protect condition={() => hasAcces(role, 'JINS')}>
             <OverviewCard
-              group={'JINS'}
+              group={Group.JINS}
               members={members?.filter((member) => member.group === 'JINS')}
             />
           </Protect>

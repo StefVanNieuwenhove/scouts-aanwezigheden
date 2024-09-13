@@ -21,7 +21,7 @@ const EvaluationChart = ({ data, config }: EvaluationChartProps) => {
     <>
       <ChartContainer
         config={config}
-        className='mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground h-full w-full'>
+        className='w-full mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground'>
         <PieChart accessibilityLayer>
           <ChartTooltip content={<ChartTooltipContent hideLabel />} />
           <ChartLegend content={<ChartLegendContent />} />
