@@ -22,7 +22,11 @@ const AanwezighedenOverviewPage = async ({
       </div>
       {members ? (
         <DataTable
-          data={members}
+          data={members.sort((a, b) => {
+            if (a.activities.length > b.activities.length) return -1;
+            if (a.activities.length < b.activities.length) return 1;
+            return 0;
+          })}
           columns={AanwezighedenCols}
           groupFilter={false}
         />

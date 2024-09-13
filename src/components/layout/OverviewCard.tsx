@@ -97,7 +97,7 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
           <CardDescription>
             <>{members ? members.length : '-'} leden</>
             <br />
-            <>{activities.length ? activities.length : '-'} activiteiten</>
+            <>{activities.length ? activities.length : '0'} vergaderingen</>
           </CardDescription>
 
           <Separator />
@@ -116,16 +116,30 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
               </TabsTrigger>
             </TabsList>
             <TabsContent value='evaluation' className='w-full h-full pt-2'>
-              <EvaluationChart
-                data={evaluationChartData}
-                config={evaluationChartConfig}
-              />
+              {activities.length ? (
+                <EvaluationChart
+                  data={evaluationChartData}
+                  config={evaluationChartConfig}
+                />
+              ) : (
+                <p>
+                  Geen data te tonen, maak vergaderingen aan om resultaat te
+                  bekijken
+                </p>
+              )}
             </TabsContent>
             <TabsContent value='year' className='w-full h-full pt-2'>
-              <YearOverviewChart
-                data={yearOverviewChartData}
-                config={yearOverviewChartConfig}
-              />
+              {activities.length ? (
+                <YearOverviewChart
+                  data={yearOverviewChartData}
+                  config={yearOverviewChartConfig}
+                />
+              ) : (
+                <p>
+                  Geen data te tonen, maak vergaderingen aan om resultaat te
+                  bekijken
+                </p>
+              )}
             </TabsContent>
           </Tabs>
         </CardContent>
