@@ -21,7 +21,6 @@ import {
   UserButton,
 } from '@clerk/nextjs';
 import { Roles } from '@/types/role';
-import { ThemeToggle } from '../ui/theme-toggle';
 import { hasAcces } from '@/lib/auth';
 import NavLink from './NavLink';
 
@@ -119,7 +118,6 @@ const Drawer = ({ role }: DrawerProps) => {
               <SignedIn>
                 <UserButton />
               </SignedIn>
-              <ThemeToggle />
             </div>
           </SheetDescription>
         </SheetHeader>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { ThemeToggle } from '../ui/theme-toggle';
 import {
   Protect,
   SignedIn,
@@ -62,7 +61,6 @@ const Navbar = async () => {
             </SignOutButton>
             <UserButton />
           </SignedIn>
-          <ThemeToggle />
         </div>
       </header>
       <Separator />

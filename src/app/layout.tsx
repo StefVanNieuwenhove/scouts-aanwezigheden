@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/components/ui/theme-provider';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Navbar } from '@/components/navigation';
 import { Toaster } from '@/components/ui/sonner';
@@ -22,15 +21,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en'>
         <body className={inter.className}>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange>
-            <Navbar />
-            {children}
-            <Toaster />
-          </ThemeProvider>
+          <Navbar />
+          {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
