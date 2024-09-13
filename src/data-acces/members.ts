@@ -7,7 +7,7 @@ import {
   MemberWithActivities,
   UploadMember,
 } from '@/types/member';
-import { Group } from '@prisma/client';
+import { Group, Member } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export const getMembers = async (): Promise<MemberTable[] | null> => {
@@ -43,7 +43,9 @@ export const getMembersByGroup = async (
   }
 };
 
-export const getMemebers = async (): Promise<MemberWithActivities[] | null> => {
+export const getMembersWithActivities = async (): Promise<
+  MemberWithActivities[] | null
+> => {
   try {
     const members = await prisma.member.findMany({
       include: {
@@ -51,6 +53,27 @@ export const getMemebers = async (): Promise<MemberWithActivities[] | null> => {
       },
     });
     return members;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getMemberByName = async ({
+  firstName,
+  lastName,
+}: {
+  firstName: string;
+  lastName: string;
+}): Promise<Member | null> => {
+  try {
+    const member = await prisma.member.findFirst({
+      where: {
+        firstName: firstName,
+        lastName: lastName,
+      },
+    });
+    return member;
   } catch (error) {
     console.error(error);
     return null;
@@ -73,6 +96,24 @@ export const uploadMembersByFile = async (
     return {
       status: 'error',
       message: 'Fout bij het uploaden van het bestand',
+    };
+  }
+};
+
+export const deleteMember = async (id: string): Promise<FormResponse> => {
+  try {
+    await prisma.member.delete({
+      where: {
+        id: id,
+      },
+    });
+    revalidatePath('/leden');
+    return { status: 'success', message: 'Succesvol verwijderd' };
+  } catch (error) {
+    console.error(error);
+    return {
+      status: 'error',
+      message: 'Fout bij het verwijderen van de leden',
     };
   }
 };

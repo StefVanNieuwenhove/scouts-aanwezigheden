@@ -2,6 +2,7 @@
 
 import { MemberTable } from '@/types/member';
 import { ColumnDef } from '@tanstack/react-table';
+import { DeleteMemberButton } from '../layout';
 
 const MembersOverviewCols: ColumnDef<MemberTable>[] = [
   {
@@ -15,6 +16,13 @@ const MembersOverviewCols: ColumnDef<MemberTable>[] = [
   {
     accessorKey: 'group',
     header: 'Groep',
+  },
+  {
+    accessorKey: '',
+    header: 'Delete',
+    cell: ({ row }) => {
+      return <DeleteMemberButton member={row.original} redirect={'/leden'} />;
+    },
   },
 ];
 
