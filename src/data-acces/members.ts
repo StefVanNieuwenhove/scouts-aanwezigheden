@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/lib/prisma';
-import { FormResponse } from '@/types/form';
+import { AddMemberProps, FormResponse } from '@/types/form';
 import {
   MemberTable,
   MemberWithActivities,
@@ -96,6 +96,47 @@ export const uploadMembersByFile = async (
     return {
       status: 'error',
       message: 'Fout bij het uploaden van het bestand',
+    };
+  }
+};
+
+export const createMember = async ({
+  firstName,
+  lastName,
+  group,
+}: AddMemberProps): Promise<FormResponse> => {
+  try {
+    const member = await prisma.member.findFirst({
+      where: {
+        firstName: firstName,
+        lastName: lastName,
+      },
+    });
+
+    if (member) {
+      return {
+        status: 'error',
+        message: 'Leden bestaat al',
+      };
+    }
+
+    await prisma.member.create({
+      data: {
+        firstName,
+        lastName,
+        group,
+      },
+    });
+    revalidatePath('/leden');
+
+    return {
+      status: 'success',
+      message: 'Lid succesvol toegevoegd',
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      message: 'Er is een fout opgetreden',
     };
   }
 };

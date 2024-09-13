@@ -10,3 +10,9 @@ export type AddActivityProps = {
   members: string[];
   group: Group;
 };
+
+export type AddMemberProps = {
+  firstName: string;
+  lastName: string;
+  group: Group;
+};
