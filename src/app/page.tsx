@@ -1,6 +1,6 @@
 import { OverviewCard } from '@/components/layout';
 import { Button } from '@/components/ui/button';
-import { getMemebers } from '@/data-acces/members';
+import { getMembersWithActivities } from '@/data-acces/members';
 import { hasAcces } from '@/lib/auth';
 import { Roles } from '@/types/role';
 import { Protect, SignedIn, SignedOut } from '@clerk/nextjs';
@@ -8,7 +8,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import Link from 'next/link';
 
 export default async function Home() {
-  const members = await getMemebers();
+  const members = await getMembersWithActivities();
   const user = await currentUser();
   const role = user?.publicMetadata?.role as Roles;
   return (

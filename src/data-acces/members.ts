@@ -10,7 +10,7 @@ import {
 import { Group, Member } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
-export const getMembers = async (): Promise<MemberTable[] | null> => {
+export const getMembersTable = async (): Promise<MemberTable[] | null> => {
   try {
     const members = await prisma.member.findMany({
       orderBy: [{ firstName: 'asc' }, { lastName: 'asc' }, { group: 'asc' }],

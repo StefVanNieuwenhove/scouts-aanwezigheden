@@ -1,8 +1,8 @@
 import { DataTable, MembersOverviewCols } from '@/components/table';
-import { getMembers } from '@/data-acces/members';
+import { getMembersTable } from '@/data-acces/members';
 
 const LedenOverzichtPage = async () => {
-  const members = await getMembers();
+  const members = await getMembersTable();
 
   return (
     <>{members && <DataTable data={members} columns={MembersOverviewCols} />}</>
