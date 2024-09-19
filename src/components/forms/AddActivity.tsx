@@ -78,7 +78,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
           name='name'
           render={({ field }) => (
             <FormItem className='max-w-prose mx-auto pb-7'>
-              <FormLabel htmlFor={field.name}>Naam</FormLabel>
+              <FormLabel htmlFor={field.name}>Naam vergadering</FormLabel>
               <FormControl>
                 <Input
                   {...field}
@@ -103,7 +103,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
           name='date'
           render={({ field }) => (
             <FormItem className='flex flex-col max-w-prose mx-auto pb-7'>
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Datum vergadering</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -144,9 +144,9 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
           control={form.control}
           name='members'
           render={({ field }) => (
-            <FormItem className='max-w-prose mx-auto'>
+            <FormItem className='max-w-prose mx-auto h-[300px] overflow-y-scroll'>
               <div className='flex justify-between items-center'>
-                <FormLabel htmlFor={field.name}>Naam</FormLabel>
+                <FormLabel htmlFor={field.name}>Leden</FormLabel>
                 <p className='text-xs text-gray-400'>
                   Selecteerd de leden die aanwezig zijn
                 </p>

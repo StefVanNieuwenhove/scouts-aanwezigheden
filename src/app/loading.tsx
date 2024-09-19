@@ -1,10 +1,9 @@
-import { LoaderPinwheel } from 'lucide-react';
-import React from 'react';
+import { Spinner } from '@/components/loaders';
 
 const loading = () => {
   return (
-    <main className='container mx-auto w-full flex min-h-screen flex-col items-center my-2'>
-      <LoaderPinwheel className='animate-spin' />;
+    <main className='container mx-auto w-full h-screen overflow-x-scroll flex flex-col items-center justify-center'>
+      <Spinner />
     </main>
   );
 };

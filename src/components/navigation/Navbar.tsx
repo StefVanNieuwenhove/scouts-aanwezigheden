@@ -18,7 +18,7 @@ const Navbar = async () => {
 
   return (
     <>
-      <header className='sticky top-0 z-50 flex h-16 w-full items-center justify-between bg-base-100 px-4 py-2 backdrop-saturate-180 backdrop-blur-xl'>
+      <header className='sticky top-0 z-50 flex h-16 w-full items-center justify-between bg-base-100 px-4 py-2 backdrop-saturate-180 backdrop-blur-xl border border-b'>
         <span className='flex md:hidden'>
           <Drawer role={role} />
         </span>
@@ -63,7 +63,6 @@ const Navbar = async () => {
           </SignedIn>
         </div>
       </header>
-      <Separator />
     </>
   );
 };
