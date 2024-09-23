@@ -53,7 +53,7 @@ export default async function Home() {
       <SignedOut>
         <h2 className='text-2xl'>Log in to continue</h2>
         <Button>
-          <Link href='/login'>Sign in</Link>
+          <Link href='/sign-in'>Sign in</Link>
         </Button>
       </SignedOut>
     </main>

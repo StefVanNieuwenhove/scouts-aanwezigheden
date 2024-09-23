@@ -32,7 +32,8 @@ export const convertToGroup = (group: string): Group => {
 };
 
 export const capitalize = (string: string): string => {
-  if (string.trim().includes(' ')) {
+  console.log(string);
+  if (string.includes(' ')) {
     const words = string.split(' ');
     const capitalizedWords = words.map((word) => {
       return capitalize(word);
