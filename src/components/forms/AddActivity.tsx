@@ -218,7 +218,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
             onClick={() => form.reset()}>
             Reset
           </Button>
-          <Button type='submit' className='w-full'>
+          <Button type='submit' className='w-full' disabled={loading}>
             Maak activiteit
           </Button>
         </span>

@@ -12,3 +12,8 @@ export const addMemberValidation = z.object({
   lastName: z.string().min(1, 'Familienaam is verplicht'),
   group: z.nativeEnum(Group).default(Group.UNKNOWN),
 });
+
+export const editActivityValidation = z.object({
+  name: z.string().min(1, 'Naam is verplicht'),
+  date: date(),
+});

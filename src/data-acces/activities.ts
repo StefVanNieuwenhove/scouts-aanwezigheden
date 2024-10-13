@@ -156,6 +156,55 @@ export const updateActivityMemberAbsent = async (
   }
 };
 
+export const editActivity = async (
+  id: string,
+  name: string,
+  date: Date,
+  url: string
+): Promise<FormResponse> => {
+  try {
+    if (!id || !name || !date)
+      return {
+        status: 'error',
+        message: 'Activiteit is niet gedefinieerd',
+      };
+
+    const exist = await prisma.activity.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!exist)
+      return {
+        status: 'error',
+        message: 'Activiteit bestaat niet',
+      };
+
+    await prisma.activity.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        date,
+      },
+    });
+
+    revalidatePath('/aanwezigheden');
+
+    return {
+      status: 'success',
+      message: 'Activiteit succesvol bewerkt',
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      message: `${error}`,
+    };
+  }
+};
+
 export const deleteActivityById = async (id: string): Promise<FormResponse> => {
   try {
     await prisma.activity.delete({
