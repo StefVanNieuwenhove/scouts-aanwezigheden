@@ -10,39 +10,45 @@ import { toast } from 'sonner';
 
 const MemberFileUpload = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const onFileUpload = async () => {
-    if (file) {
-      const fileReader = new FileReader();
-      fileReader.readAsText(file, 'UTF-8');
-      fileReader.onload = async (e) => {
-        const content = e.target?.result as string;
-        const rows = content?.toLowerCase().split('\n');
-        // console.log(rows);
+    try {
+      if (file) {
+        const fileReader = new FileReader();
+        fileReader.readAsText(file, 'UTF-8');
+        fileReader.onload = async (e) => {
+          const content = e.target?.result as string;
+          const rows = content?.toLowerCase().split('\n');
+          // console.log(rows);
 
-        // delete first row
-        rows.shift();
+          // delete first row
+          rows.shift();
 
-        if (rows) {
-          const members = rows.map(async (row) => {
-            const [firstName, lastName, group] = row.split(';');
-            return {
-              firstName: capitalize(firstName),
-              lastName: capitalize(lastName),
-              group: convertToGroup(group.trim().toString()),
-            };
-          });
+          if (rows) {
+            const members = rows.map(async (row) => {
+              const [firstName, lastName, group] = row.split(';');
+              return {
+                firstName: capitalize(firstName),
+                lastName: capitalize(lastName),
+                group: convertToGroup(group.trim().toString()),
+              };
+            });
 
-          const result = await Promise.all(members);
-          console.log(result);
-          const response = await uploadMembersByFile(result);
-          if (response.status === 'success') {
-            toast.success(response.message);
-          } else {
-            toast.error(response.message);
+            const result = await Promise.all(members);
+            const response = await uploadMembersByFile(result);
+            if (response.status === 'success') {
+              toast.success(response.message);
+            } else {
+              toast.error(response.message);
+            }
           }
-        }
-      };
+        };
+      }
+    } catch (error) {
+      toast.error('Er is een fout opgetreden');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,7 +68,7 @@ const MemberFileUpload = () => {
               }
             }}
           />
-          <Button variant='default' onClick={onFileUpload}>
+          <Button variant='default' onClick={onFileUpload} disabled={loading}>
             Upload
           </Button>
         </div>

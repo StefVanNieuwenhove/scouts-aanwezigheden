@@ -4,7 +4,7 @@ import { createMember } from '@/data-acces/members';
 import { addMemberValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Group } from '@prisma/client';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -29,6 +29,8 @@ import {
 import { capitalize } from '@/lib/utils';
 
 const MembersFormUpload = () => {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof addMemberValidation>>({
     resolver: zodResolver(addMemberValidation),
     defaultValues: {
@@ -40,6 +42,7 @@ const MembersFormUpload = () => {
 
   const onSubmit = async (data: z.infer<typeof addMemberValidation>) => {
     try {
+      setLoading(true);
       const result = await createMember({
         firstName: capitalize(data.firstName),
         lastName: capitalize(data.lastName),
@@ -50,9 +53,11 @@ const MembersFormUpload = () => {
       } else {
         toast.success(result.message);
       }
-      form.reset();
     } catch (error) {
       toast.error('Er is een fout opgetreden');
+    } finally {
+      form.reset();
+      setLoading(false);
     }
   };
   return (
@@ -145,7 +150,7 @@ const MembersFormUpload = () => {
             <Button type='reset' variant={'outline'} className='w-full'>
               Reset
             </Button>
-            <Button type='submit' className='w-full'>
+            <Button type='submit' className='w-full' disabled={loading}>
               Upload
             </Button>
           </span>

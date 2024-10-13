@@ -37,12 +37,14 @@ import {
 import { Checkbox } from '../ui/checkbox';
 import { Group } from '@prisma/client';
 import { toast } from 'sonner';
+import { useState } from 'react';
 
 type AddActivityProps = {
   members: MemberWithActivities[] | null;
   group: Group;
 };
 const AddActivity = ({ members, group }: AddActivityProps) => {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof addActivityValidation>>({
     resolver: zodResolver(addActivityValidation),
     defaultValues: {
@@ -54,19 +56,22 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
 
   const onSubmit = async (data: z.infer<typeof addActivityValidation>) => {
     try {
+      setLoading(true);
       const result = await addActivity({ ...data, group });
       if (result.status === 'error') {
         toast.error(result.message);
       } else {
         toast.success(result.message);
       }
+    } catch (error) {
+      toast.error('Er is een fout opgetreden');
+    } finally {
       form.reset({
         name: '',
         date: new Date(),
         members: [],
       });
-    } catch (error) {
-      toast.error('Er is een fout opgetreden');
+      setLoading(false);
     }
   };
 
@@ -209,6 +214,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
             type='reset'
             variant={'outline'}
             className='w-full'
+            disabled={loading}
             onClick={() => form.reset()}>
             Reset
           </Button>

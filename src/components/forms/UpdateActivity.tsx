@@ -9,6 +9,7 @@ import {
   updateActivityMemberPresent,
 } from '@/data-acces/activities';
 import { toast } from 'sonner';
+import { useState } from 'react';
 
 type UpdateActivityProps = {
   membersPresent: Member[];
@@ -21,8 +22,11 @@ const UpdateActivity = ({
   membersAbsent,
   activity,
 }: UpdateActivityProps) => {
+  const [loading, setLoading] = useState(false);
+
   const setMembersPresent = async (member: string) => {
     try {
+      setLoading(true);
       const result = await updateActivityMemberPresent(activity, member);
       if (result.status === 'success') {
         toast.success(result.message);
@@ -31,11 +35,14 @@ const UpdateActivity = ({
       }
     } catch (error) {
       toast.error('Er is een fout opgetreden');
+    } finally {
+      setLoading(false);
     }
   };
 
   const setMembersAbsent = async (member: string) => {
     try {
+      setLoading(true);
       const result = await updateActivityMemberAbsent(activity, member);
       if (result.status === 'success') {
         toast.success(result.message);
@@ -44,6 +51,8 @@ const UpdateActivity = ({
       }
     } catch (error) {
       toast.error('Er is een fout opgetreden');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,6 +75,7 @@ const UpdateActivity = ({
                         <Button
                           className='hover:border rounded-full'
                           size={'icon'}
+                          disabled={loading}
                           onClick={() => setMembersAbsent(member.id)}>
                           <ArrowRightLeft className='w-4 h-4' />
                         </Button>
@@ -101,6 +111,7 @@ const UpdateActivity = ({
                           variant={'destructive'}
                           className='hover:border rounded-full'
                           size={'icon'}
+                          disabled={loading}
                           onClick={() => setMembersPresent(member.id)}>
                           <ArrowLeftRight className='w-4 h-4' />
                         </Button>
