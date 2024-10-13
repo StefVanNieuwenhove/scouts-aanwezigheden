@@ -20,6 +20,7 @@ const NavLink = ({ href, name, onClose, fullWidth }: NavLinkProps) => {
 
   const isActive = (): boolean => {
     const paths = pathname.split('/')[2];
+    if (href === '/') return true;
     return paths === name.toLowerCase();
   };
   return (
