@@ -9,7 +9,6 @@ import {
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import Drawer from './Drawer';
-import { Separator } from '../ui/separator';
 import { getUserRole, hasAcces } from '@/lib/auth';
 import NavLink from './NavLink';
 

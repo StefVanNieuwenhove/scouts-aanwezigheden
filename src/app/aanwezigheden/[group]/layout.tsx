@@ -1,4 +1,3 @@
-import { NavLink } from '@/components/navigation';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Group } from '@prisma/client';
