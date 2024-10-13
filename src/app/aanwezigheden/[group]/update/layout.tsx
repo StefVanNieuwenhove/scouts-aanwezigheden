@@ -36,7 +36,7 @@ const AanwezighedenUpdateLayoutPage = async ({
             .sort((a, b) => b.date.getTime() - a.date.getTime())
             .map((activity) => (
               <li key={activity.id}>
-                <Card className='w-full hover:bg-gray-100'>
+                <Card className='w-full hover:bg-gray-100 min-w-[200px]'>
                   <CardHeader className='w-full'>
                     <CardTitle className='text-xl font-bold hover:underline w-full truncate'>
                       <Link

@@ -1,8 +1,6 @@
 'use client';
 
 import {
-  Bar,
-  BarChart,
   CartesianGrid,
   LabelList,
   Line,
@@ -13,8 +11,6 @@ import {
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from '../ui/chart';
@@ -35,6 +31,12 @@ const YearOverviewChart = ({ data, config }: YearOverviewChartProps) => {
         data={data}
         margin={{ top: 25, left: 12, right: 12 }}>
         <CartesianGrid vertical={false} />
+        <XAxis
+          dataKey='date'
+          tickMargin={10}
+          axisLine={false}
+          tickLine={false}
+        />
         <XAxis
           dataKey='date'
           tickMargin={10}

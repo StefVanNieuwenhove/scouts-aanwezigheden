@@ -154,7 +154,7 @@ const EditActivity = ({ activity, redirect }: EditActivityProps) => {
                   Reset
                 </Button>
                 <Button type='submit' className='w-full' disabled={loading}>
-                  Maak activiteit
+                  Bewerk activiteit
                 </Button>
               </div>
             </form>

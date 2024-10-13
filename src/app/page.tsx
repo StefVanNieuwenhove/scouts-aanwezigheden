@@ -12,6 +12,7 @@ export default async function Home() {
   const members = await getMembersWithActivities();
   const user = await currentUser();
   const role = user?.publicMetadata?.role as Roles;
+
   return (
     <main className='container mx-auto w-full flex min-h-screen flex-col items-center my-2'>
       <SignedIn>

@@ -17,8 +17,6 @@ import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import { TabsContent } from '@radix-ui/react-tabs';
 import { YearOverviewChart, EvaluationChart } from '../charts';
 import { ChartConfig } from '../ui/chart';
-import { nlBE, th } from 'date-fns/locale';
-import { format } from 'date-fns';
 import { Button } from '../ui/button';
 import { FileText } from 'lucide-react';
 import Link from 'next/link';
@@ -66,7 +64,7 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
   const yearOverviewChartData: YearOverviewChartData[] = activities.map(
     (activity) => {
       return {
-        date: activity.name,
+        date: activity.date.toLocaleDateString('nl-BE'),
         count: activity.members.length,
         fill: 'hsl(var(--primary))',
       };
@@ -103,7 +101,7 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
           <Separator />
         </CardHeader>
         <CardContent className='min-h-[300px]'>
-          <h4 className='text-xl text-center underline pb-2'>
+          <h4 className='text-xl text-center underline pb-2 capitalize'>
             overzicht aanwezigheden
           </h4>
           <Tabs defaultValue='evaluation' className='w-full'>

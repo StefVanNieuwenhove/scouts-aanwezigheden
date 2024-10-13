@@ -30,6 +30,7 @@ export const getActivitiesByGroup = async (
     include: {
       members: incudeMembers,
     },
+    orderBy: [{ date: 'asc' }],
   });
   return activities;
 };
