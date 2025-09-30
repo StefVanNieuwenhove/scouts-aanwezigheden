@@ -1,3 +1,4 @@
+import { Roles } from '@/types/role';
 import { Group } from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -28,6 +29,35 @@ export const convertToGroup = (group: string): Group => {
       return Group.JINS;
     default:
       return Group.UNKNOWN;
+  }
+};
+
+export const convertToRole = (role: string): Roles => {
+  switch (role.toLowerCase()) {
+    case 'kapoen':
+      return 'KAPOENEN';
+    case 'kabouter':
+      return 'KAPOENEN';
+    case 'wouters':
+      return 'WOUTERS';
+    case 'jonggivers':
+      return 'JONGGIVERS';
+    case 'jongverkenner':
+      return 'JONGGIVERS';
+    case 'giver':
+      return 'GIVERS';
+    case 'gidsen':
+      return 'GIVERS';
+    case 'jin':
+      return 'JINS';
+    case 'jins':
+      return 'JINS';
+    case 'groepsleiding':
+      return 'GROEPSLEIDING';
+    case 'admin':
+      return 'ADMIN';
+    default:
+      return 'UNKNOWN';
   }
 };
 

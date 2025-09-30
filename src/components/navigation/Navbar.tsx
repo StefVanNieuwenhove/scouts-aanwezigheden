@@ -18,81 +18,212 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarTrigger,
 } from '../ui/sidebar';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../ui/collapsible';
+import { CalendarPlus, CalendarSync, ChevronDown, List } from 'lucide-react';
+import {
+  GiDutchBike,
+  GiJesterHat,
+  GiMorgueFeet,
+  GiLightBackpack,
+  GiKite,
+} from 'react-icons/gi';
 
 const Navbar = async () => {
   const role = await getUserRole();
   let nav = 'Overzicht';
 
+  const takLinks = [
+    {
+      group: 'Kapoenen',
+      cover: <GiJesterHat size={20} />,
+      acces: hasAcces(role, 'KAPOENEN'),
+      links: [
+        {
+          name: 'Overzicht',
+          href: '/kapoenen',
+          icon: <List size={16} />,
+        },
+        {
+          name: 'Nieuwe vergaring',
+          href: '/kapoenen/create',
+          icon: <CalendarPlus size={16} />,
+        },
+        {
+          name: 'Update vergaringen',
+          href: '/kapoenen/update',
+          icon: <CalendarSync size={16} />,
+        },
+      ],
+    },
+    {
+      group: 'Wouters',
+      cover: <GiKite size={20} />,
+      acces: hasAcces(role, 'WOUTERS'),
+      links: [
+        {
+          name: 'Overzicht',
+          href: '/wouters',
+          icon: <List size={16} />,
+        },
+        {
+          name: 'Nieuwe vergaring',
+          href: '/wouters/create',
+          icon: <CalendarPlus size={16} />,
+        },
+        {
+          name: 'Update vergaringen',
+          href: '/wouters/update',
+          icon: <CalendarSync size={16} />,
+        },
+      ],
+    },
+    {
+      group: 'Jonggivers',
+      cover: <GiLightBackpack size={20} />,
+      acces: hasAcces(role, 'JONGGIVERS'),
+      links: [
+        {
+          name: 'Overzicht',
+          href: '/jonggivers',
+          icon: <List size={16} />,
+        },
+        {
+          name: 'Nieuwe vergaring',
+          href: '/jonggivers/create',
+          icon: <CalendarPlus size={16} />,
+        },
+        {
+          name: 'Update vergaringen',
+          href: '/jonggivers/update',
+          icon: <CalendarSync size={16} />,
+        },
+      ],
+    },
+    {
+      group: 'Givers',
+      cover: <GiDutchBike size={20} />,
+      acces: hasAcces(role, 'GIVERS'),
+      links: [
+        {
+          name: 'Overzicht',
+          href: '/givers',
+          icon: <List size={16} />,
+        },
+        {
+          name: 'Nieuwe vergaring',
+          href: '/givers/create',
+          icon: <CalendarPlus size={16} />,
+        },
+        {
+          name: 'Update vergaringen',
+          href: '/givers/update',
+          icon: <CalendarSync size={16} />,
+        },
+      ],
+    },
+    {
+      group: 'Jins',
+      cover: <GiMorgueFeet size={20} />,
+      acces: hasAcces(role, 'JINS'),
+      links: [
+        {
+          name: 'Overzicht',
+          href: '/jins',
+          icon: <List size={16} />,
+        },
+        {
+          name: 'Nieuwe vergaring',
+          href: '/jins/create',
+          icon: <CalendarPlus size={16} />,
+        },
+        {
+          name: 'Update vergaringen',
+          href: '/jins/update',
+          icon: <CalendarSync size={16} />,
+        },
+      ],
+    },
+  ];
+
   return (
     <>
       <header className='sticky top-0 z-50 flex h-16 w-full items-center justify-between bg-base-100 px-4 py-2 backdrop-saturate-180 backdrop-blur-xl border border-b'>
-        <SidebarTrigger />
+        <SignedIn>
+          <SidebarTrigger />
+        </SignedIn>
         <h1>Scouts Ter Alwina - Aanwezigheden</h1>
-        <div className='flex items-center gap-4 '>
-          <SignedOut>
-            <Button>
-              <Link href='/sign-in'>Sign in</Link>
-            </Button>
-          </SignedOut>
-          <SignedIn>
-            <SignOutButton>
-              <Button>Sign out</Button>
-            </SignOutButton>
-            <UserButton />
-          </SignedIn>
-        </div>
       </header>
-      <Sidebar className='mt-12'>
-        <SidebarHeader></SidebarHeader>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel>Tak</SidebarGroupLabel>
-            <SidebarGroupContent className='flex flex-col gap-2'>
-              <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
-                <NavLink
-                  name='Kapoenen'
-                  href={'/aanwezigheden/kapoenen'}
-                  isActive={nav === 'Kapoenen'}
-                />
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'WOUTERS')}>
-                <NavLink
-                  name='Wouters'
-                  href={'/aanwezigheden/wouters'}
-                  isActive={nav === 'Wouters'}
-                />
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'JONGGIVERS')}>
-                <NavLink
-                  name='Jonggivers'
-                  href={'/aanwezigheden/jonggivers'}
-                  isActive={nav === 'Jonggivers'}
-                />
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'GIVERS')}>
-                <NavLink
-                  name='Givers'
-                  href={'/aanwezigheden/givers'}
-                  isActive={nav === 'Givers'}
-                />
-              </Protect>
-              <Protect condition={() => hasAcces(role, 'JINS')}>
-                <NavLink
-                  name='Jins'
-                  href={'/aanwezigheden/jins'}
-                  isActive={nav === 'Jins'}
-                />
-              </Protect>
-            </SidebarGroupContent>
-          </SidebarGroup>
-          <SidebarGroup>
-            <SidebarGroupLabel>Beheer</SidebarGroupLabel>
-          </SidebarGroup>
-        </SidebarContent>
-        <SidebarFooter></SidebarFooter>
-      </Sidebar>
+      <SignedIn>
+        <Sidebar className='pt-16' variant='sidebar' collapsible='icon'>
+          <SidebarContent>
+            <Protect>
+              <SidebarGroup>
+                <SidebarGroupLabel>Tak</SidebarGroupLabel>
+                <SidebarGroupContent className='flex flex-col gap-2'>
+                  {takLinks.map(
+                    (link) =>
+                      link.acces && (
+                        <SidebarMenu key={link.group} className='w-full'>
+                          <Collapsible className={`group/${link.group}`}>
+                            <SidebarMenuItem>
+                              <CollapsibleTrigger asChild>
+                                <SidebarMenuButton>
+                                  {link.cover}
+                                  {link.group}
+                                  <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
+                                </SidebarMenuButton>
+                              </CollapsibleTrigger>
+                              <CollapsibleContent>
+                                <SidebarMenuSub>
+                                  {link.links.map((sublink) => (
+                                    <SidebarMenuSubItem key={sublink.href}>
+                                      <SidebarMenuSubButton asChild>
+                                        <Link href={sublink.href}>
+                                          {sublink.icon}
+                                          <span>{sublink.name}</span>
+                                        </Link>
+                                      </SidebarMenuSubButton>
+                                    </SidebarMenuSubItem>
+                                  ))}
+                                </SidebarMenuSub>
+                              </CollapsibleContent>
+                            </SidebarMenuItem>
+                          </Collapsible>
+                        </SidebarMenu>
+                      )
+                  )}
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </Protect>
+            <Protect condition={() => hasAcces(role, 'GROEPSLEIDING')}>
+              <SidebarGroup>
+                <SidebarGroupLabel>Beheer</SidebarGroupLabel>
+                <SidebarGroupContent className='flex flex-col gap-2'>
+                  <NavLink name='Leden' href={'/leden'} />
+                  <NavLink name='Leiding' href={'/leiding'} />
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </Protect>
+          </SidebarContent>
+          <SidebarFooter className='border-t'>
+            <Button variant='link' className='w-full mb-2'>
+              <UserButton showName appearance={{}} />
+            </Button>
+          </SidebarFooter>
+        </Sidebar>
+      </SignedIn>
     </>
   );
 };
