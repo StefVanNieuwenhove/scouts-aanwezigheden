@@ -24,6 +24,8 @@ import { Button } from '../ui/button';
 import { useState } from 'react';
 import GroupFilter from './GroupFilter';
 import { convertToGroup } from '@/lib/utils';
+import { toast } from 'sonner';
+import { deleteAllMembers } from '@/data-acces/members';
 
 type DataTableProps<TData, TValue> = {
   data: TData[];
@@ -58,10 +60,29 @@ const DataTable = <TData, TValue>({
       },
     },
   });
+
+  const handleDeleteAllMembers = async () => {
+    try {
+      const result = await deleteAllMembers();
+      if (result.status === 'error') {
+        toast.error(result.message);
+      } else {
+        toast.success(result.message);
+      }
+    } catch (error) {
+      toast.error(error as string);
+    }
+  };
+
   return (
     <>
       {groupFilter && (
-        <div className='my-1 w-full flex justify-end'>
+        <div className='my-1 w-full flex justify-between items-center'>
+          <section>
+            <Button variant={'destructive'} onClick={handleDeleteAllMembers}>
+              Verwijder alle leden
+            </Button>
+          </section>
           <section className='w-1/3'>
             <GroupFilter
               onChange={(value: string) => {

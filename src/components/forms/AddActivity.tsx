@@ -149,7 +149,7 @@ const AddActivity = ({ members, group }: AddActivityProps) => {
           control={form.control}
           name='members'
           render={({ field }) => (
-            <FormItem className='max-w-prose mx-auto h-[300px] overflow-y-scroll'>
+            <FormItem className='max-w-prose mx-auto h-[500px] overflow-y-scroll pb-7'>
               <div className='flex justify-between items-center'>
                 <FormLabel htmlFor={field.name}>Leden</FormLabel>
                 <p className='text-xs text-gray-400'>

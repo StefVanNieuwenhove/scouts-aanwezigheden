@@ -141,6 +141,20 @@ export const createMember = async ({
   }
 };
 
+export const deleteAllMembers = async (): Promise<FormResponse> => {
+  try {
+    await prisma.member.deleteMany();
+    revalidatePath('/leden');
+    return { status: 'success', message: 'Succesvol verwijderd' };
+  } catch (error) {
+    console.error(error);
+    return {
+      status: 'error',
+      message: 'Fout bij het verwijderen van alle leden',
+    };
+  }
+};
+
 export const deleteMember = async (id: string): Promise<FormResponse> => {
   try {
     await prisma.member.delete({

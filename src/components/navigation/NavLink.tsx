@@ -2,33 +2,26 @@
 
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import { usePathname } from 'next/navigation';
+import { useSidebar } from '../ui/sidebar';
 
 type NavLinkProps = {
   href: string;
   name: string;
-  onClose?: () => void;
   fullWidth?: boolean;
+  isActive: boolean;
 };
 
-const NavLink = ({ href, name, onClose, fullWidth }: NavLinkProps) => {
-  const pathname = usePathname();
-
+const NavLink = ({ href, name, fullWidth, isActive = false }: NavLinkProps) => {
+  const { toggleSidebar } = useSidebar();
   const style = {
     width: fullWidth ? '100%' : 'auto',
   };
-
-  const isActive = (): boolean => {
-    const paths = pathname.split('/')[2];
-    if (href === '/') return true;
-    return paths === name.toLowerCase();
-  };
   return (
     <Button
-      variant={isActive() ? 'default' : 'outline'}
-      className={isActive() ? 'underline' : ''}
+      variant={isActive ? 'default' : 'outline'}
+      className={isActive ? 'underline' : ''}
       style={style}
-      onClick={onClose}>
+      onClick={() => toggleSidebar()}>
       <Link href={href}>{name}</Link>
     </Button>
   );

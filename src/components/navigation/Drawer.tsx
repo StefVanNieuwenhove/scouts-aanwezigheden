@@ -46,17 +46,11 @@ const Drawer = ({ role }: DrawerProps) => {
           <SheetDescription className='flex flex-col gap-2 items-start'>
             <div className='flex flex-col gap-2 items-start w-full'>
               <SignedIn>
-                <NavLink
-                  name='Overzicht'
-                  href={'/'}
-                  onClose={() => setOpen(false)}
-                  fullWidth
-                />
+                <NavLink name='Overzicht' href={'/'} fullWidth isActive />
                 <Protect condition={() => hasAcces(role, 'KAPOENEN')}>
                   <NavLink
                     name='Kapoenen'
                     href={'/aanwezigheden/kapoenen'}
-                    onClose={() => setOpen(false)}
                     fullWidth
                   />
                 </Protect>
@@ -64,7 +58,6 @@ const Drawer = ({ role }: DrawerProps) => {
                   <NavLink
                     name='Wouters'
                     href={'/aanwezigheden/wouters'}
-                    onClose={() => setOpen(false)}
                     fullWidth
                   />
                 </Protect>
@@ -72,7 +65,6 @@ const Drawer = ({ role }: DrawerProps) => {
                   <NavLink
                     name='Jonggivers'
                     href={'/aanwezigheden/jonggivers'}
-                    onClose={() => setOpen(false)}
                     fullWidth
                   />
                 </Protect>
@@ -80,25 +72,14 @@ const Drawer = ({ role }: DrawerProps) => {
                   <NavLink
                     name='Givers'
                     href={'/aanwezigheden/givers'}
-                    onClose={() => setOpen(false)}
                     fullWidth
                   />
                 </Protect>
                 <Protect condition={() => hasAcces(role, 'JINS')}>
-                  <NavLink
-                    name='Jins'
-                    href={'/aanwezigheden/jins'}
-                    onClose={() => setOpen(false)}
-                    fullWidth
-                  />
+                  <NavLink name='Jins' href={'/aanwezigheden/jins'} fullWidth />
                 </Protect>
                 <Protect condition={() => hasAcces(role, 'ADMIN')}>
-                  <NavLink
-                    name='Leden'
-                    href={'/leden'}
-                    onClose={() => setOpen(false)}
-                    fullWidth
-                  />
+                  <NavLink name='Leden' href={'/leden'} fullWidth />
                 </Protect>
                 <Separator />
               </SignedIn>

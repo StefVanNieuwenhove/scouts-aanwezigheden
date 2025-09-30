@@ -11,7 +11,7 @@ type AanwezigheidLayoutProps = {
 const AanwezighedenLayout = ({ children, params }: AanwezigheidLayoutProps) => {
   return (
     <>
-      <main className='container mx-auto w-full overflow-x-scroll mt-1'>
+      <main className='container mx-auto w-full h-fit  mt-1'>
         <nav className='w-full flex flex-col md:flex-row justify-center gap-1 md:gap-4 items-center border-gray-200 py-4'>
           <Button variant={'link'}>
             <Link href={`/aanwezigheden/${params.group}`}>Overzicht</Link>
