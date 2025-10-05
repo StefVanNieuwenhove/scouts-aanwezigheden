@@ -15,6 +15,8 @@ export const convertToGroup = (group: string): Group => {
       return Group.WOUTERS;
     case 'wouters':
       return Group.WOUTERS;
+    case 'welpen':
+      return Group.WOUTERS;
     case 'jonggivers':
       return Group.JONGGIVERS;
     case 'jonggidsen/jongverkenners':

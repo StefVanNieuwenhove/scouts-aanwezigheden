@@ -21,7 +21,7 @@ import {
   TableRow,
 } from '../ui/table';
 import { Button } from '../ui/button';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import GroupFilter from './GroupFilter';
 import { convertToGroup } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -31,12 +31,14 @@ type DataTableProps<TData, TValue> = {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
   groupFilter: boolean;
+  deleteAll?: ReactNode;
 };
 
 const DataTable = <TData, TValue>({
   data,
   columns,
   groupFilter = false,
+  deleteAll,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -76,7 +78,23 @@ const DataTable = <TData, TValue>({
 
   return (
     <>
-      {groupFilter && (
+      <div className='my-1 w-full flex justify-between items-center'>
+        <section>{deleteAll}</section>
+        <section className='w-1/3'>
+          {groupFilter && (
+            <GroupFilter
+              onChange={(value: string) => {
+                if (value === 'all') table.resetColumnFilters(true);
+                else
+                  table
+                    .getColumn('group')
+                    ?.setFilterValue(convertToGroup(value));
+              }}
+            />
+          )}
+        </section>
+      </div>
+      {/* {groupFilter && (
         <div className='my-1 w-full flex justify-between items-center'>
           <section>
             <Button variant={'destructive'} onClick={handleDeleteAllMembers}>
@@ -95,7 +113,7 @@ const DataTable = <TData, TValue>({
             />
           </section>
         </div>
-      )}
+      )} */}
       <Table className='border dark:border-none'>
         <TableHeader className='bg-primary'>
           {table.getHeaderGroups().map((headerGroup) => (

@@ -39,123 +39,14 @@ import {
   GiLightBackpack,
   GiKite,
 } from 'react-icons/gi';
+import { BeheerLinks, GroupLinks } from '@/lib/links';
+import { Link as LinkType } from '@/types/links';
+import { RxDashboard } from 'react-icons/rx';
 
 const Navbar = async () => {
   const role = await getUserRole();
-  let nav = 'Overzicht';
-
-  const takLinks = [
-    {
-      group: 'Kapoenen',
-      cover: <GiJesterHat size={20} />,
-      acces: hasAcces(role, 'KAPOENEN'),
-      links: [
-        {
-          name: 'Overzicht',
-          href: '/kapoenen',
-          icon: <List size={16} />,
-        },
-        {
-          name: 'Nieuwe vergaring',
-          href: '/kapoenen/create',
-          icon: <CalendarPlus size={16} />,
-        },
-        {
-          name: 'Update vergaringen',
-          href: '/kapoenen/update',
-          icon: <CalendarSync size={16} />,
-        },
-      ],
-    },
-    {
-      group: 'Wouters',
-      cover: <GiKite size={20} />,
-      acces: hasAcces(role, 'WOUTERS'),
-      links: [
-        {
-          name: 'Overzicht',
-          href: '/wouters',
-          icon: <List size={16} />,
-        },
-        {
-          name: 'Nieuwe vergaring',
-          href: '/wouters/create',
-          icon: <CalendarPlus size={16} />,
-        },
-        {
-          name: 'Update vergaringen',
-          href: '/wouters/update',
-          icon: <CalendarSync size={16} />,
-        },
-      ],
-    },
-    {
-      group: 'Jonggivers',
-      cover: <GiLightBackpack size={20} />,
-      acces: hasAcces(role, 'JONGGIVERS'),
-      links: [
-        {
-          name: 'Overzicht',
-          href: '/jonggivers',
-          icon: <List size={16} />,
-        },
-        {
-          name: 'Nieuwe vergaring',
-          href: '/jonggivers/create',
-          icon: <CalendarPlus size={16} />,
-        },
-        {
-          name: 'Update vergaringen',
-          href: '/jonggivers/update',
-          icon: <CalendarSync size={16} />,
-        },
-      ],
-    },
-    {
-      group: 'Givers',
-      cover: <GiDutchBike size={20} />,
-      acces: hasAcces(role, 'GIVERS'),
-      links: [
-        {
-          name: 'Overzicht',
-          href: '/givers',
-          icon: <List size={16} />,
-        },
-        {
-          name: 'Nieuwe vergaring',
-          href: '/givers/create',
-          icon: <CalendarPlus size={16} />,
-        },
-        {
-          name: 'Update vergaringen',
-          href: '/givers/update',
-          icon: <CalendarSync size={16} />,
-        },
-      ],
-    },
-    {
-      group: 'Jins',
-      cover: <GiMorgueFeet size={20} />,
-      acces: hasAcces(role, 'JINS'),
-      links: [
-        {
-          name: 'Overzicht',
-          href: '/jins',
-          icon: <List size={16} />,
-        },
-        {
-          name: 'Nieuwe vergaring',
-          href: '/jins/create',
-          icon: <CalendarPlus size={16} />,
-        },
-        {
-          name: 'Update vergaringen',
-          href: '/jins/update',
-          icon: <CalendarSync size={16} />,
-        },
-      ],
-    },
-  ];
+  const takLinks = await GroupLinks();
+  const beheerLinks: LinkType[] = BeheerLinks();
 
   return (
     <>
@@ -168,6 +59,16 @@ const Navbar = async () => {
       <SignedIn>
         <Sidebar className='pt-16' variant='sidebar' collapsible='icon'>
           <SidebarContent>
+            <SidebarMenu className='w-full'>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href={'/'}>
+                    <RxDashboard className='ml-2' />
+                    <span> Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
             <Protect>
               <SidebarGroup>
                 <SidebarGroupLabel>Tak</SidebarGroupLabel>
@@ -211,8 +112,35 @@ const Navbar = async () => {
               <SidebarGroup>
                 <SidebarGroupLabel>Beheer</SidebarGroupLabel>
                 <SidebarGroupContent className='flex flex-col gap-2'>
-                  <NavLink name='Leden' href={'/leden'} />
-                  <NavLink name='Leiding' href={'/leiding'} />
+                  {beheerLinks.map((link) => (
+                    <SidebarMenu key={link.group} className='w-full'>
+                      <Collapsible className={`group/${link.group}`}>
+                        <SidebarMenuItem>
+                          <CollapsibleTrigger asChild>
+                            <SidebarMenuButton>
+                              {link.cover}
+                              {link.group}
+                              <ChevronDown className='ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180' />
+                            </SidebarMenuButton>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent>
+                            <SidebarMenuSub>
+                              {link.links.map((sublink) => (
+                                <SidebarMenuSubItem key={sublink.href}>
+                                  <SidebarMenuSubButton asChild>
+                                    <Link href={sublink.href}>
+                                      {sublink.icon}
+                                      <span>{sublink.name}</span>
+                                    </Link>
+                                  </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                              ))}
+                            </SidebarMenuSub>
+                          </CollapsibleContent>
+                        </SidebarMenuItem>
+                      </Collapsible>
+                    </SidebarMenu>
+                  ))}
                 </SidebarGroupContent>
               </SidebarGroup>
             </Protect>

@@ -1,3 +1,4 @@
+import DeleteAllMemebersButton from '@/components/layout/DeleteAllMemebersButton';
 import { DataTable, MembersOverviewCols } from '@/components/table';
 import { getMembersTable } from '@/data-acces/members';
 
@@ -7,7 +8,12 @@ const LedenOverzichtPage = async () => {
   return (
     <>
       {members && (
-        <DataTable data={members} columns={MembersOverviewCols} groupFilter />
+        <DataTable
+          data={members}
+          columns={MembersOverviewCols}
+          groupFilter
+          deleteAll={<DeleteAllMemebersButton />}
+        />
       )}
     </>
   );
