@@ -35,6 +35,7 @@ type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   groupFilter: boolean;
   deleteAll?: ReactNode;
+  craeteButton?: ReactNode;
 };
 
 const DataTable = <TData, TValue>({
@@ -42,6 +43,7 @@ const DataTable = <TData, TValue>({
   columns,
   groupFilter = false,
   deleteAll,
+  craeteButton,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -70,7 +72,10 @@ const DataTable = <TData, TValue>({
   return (
     <>
       <div className='my-1 w-full flex justify-between items-center'>
-        <section>{deleteAll}</section>
+        <section className='flex items-center gap-2'>
+          {deleteAll}
+          {craeteButton}
+        </section>
         <section className='w-1/3'>
           {groupFilter && (
             <GroupFilter
@@ -98,7 +103,7 @@ const DataTable = <TData, TValue>({
                       ? null
                       : (flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         ) as any)}
                   </TableHead>
                 );

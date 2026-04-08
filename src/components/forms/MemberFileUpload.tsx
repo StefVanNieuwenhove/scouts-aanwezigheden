@@ -54,7 +54,7 @@ const MemberFileUpload = () => {
 
   return (
     <>
-      <div>
+      <div className='border rounded-md p-5 bg-white/50 dark:bg-gray-900/50 shadow-md space-y-2'>
         <Label htmlFor='file-upload'>Upload bestand</Label>
         <div className='flex gap-2'>
           <Input

@@ -5,7 +5,11 @@ import { Navbar } from '@/components/navigation';
 import { Toaster } from '@/components/ui/sonner';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -26,7 +30,7 @@ export default function RootLayout({
       <html lang='nl'>
         <body
           className={`${inter.className} antialiased max-w-full min-h-screen flex flex-col`}>
-          <SidebarProvider defaultOpen={true}>
+          <SidebarProvider>
             <main className='w-full flex-grow'>
               <Navbar />
               {children}

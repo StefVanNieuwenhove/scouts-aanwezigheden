@@ -11,7 +11,6 @@ import Link from 'next/link';
 export default async function Home() {
   const members = await getMembersWithActivities();
   const user = await currentUser();
-  console.log(user);
   const role = user?.publicMetadata?.role as Roles;
 
   return (
@@ -34,7 +33,7 @@ export default async function Home() {
             <OverviewCard
               group={Group.JONGGIVERS}
               members={members?.filter(
-                (member) => member.group === 'JONGGIVERS'
+                (member) => member.group === 'JONGGIVERS',
               )}
             />
           </Protect>
