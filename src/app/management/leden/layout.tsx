@@ -4,9 +4,9 @@ type LedenLayoutProps = {
 
 const LedenLayout = async ({ children }: LedenLayoutProps) => {
   return (
-    <main className='container mx-auto my-1 w-full overflow-x-scroll'>
+    <section className='container mx-auto my-1 w-full overflow-x-scroll'>
       {children}
-    </main>
+    </section>
   );
 };
 

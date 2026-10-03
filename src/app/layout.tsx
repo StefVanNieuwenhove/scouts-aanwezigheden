@@ -38,6 +38,7 @@ export default function RootLayout({
             <Toaster />
           </SidebarProvider>
 
+          {/* vercel analytics */}
           <Analytics />
           <SpeedInsights />
         </body>

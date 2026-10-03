@@ -19,6 +19,7 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
 } from '../ui/alert-dialog';
+import { ActivityDetailsDialog } from '../layout';
 
 const ActivitiesOverviewCols: ColumnDef<ActivityWithMembers>[] = [
   {
@@ -84,36 +85,7 @@ const ActivitiesOverviewCols: ColumnDef<ActivityWithMembers>[] = [
   {
     accessorKey: 'details',
     header: '',
-    cell: ({ row }) => {
-      return (
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button size={'icon'} variant={'ghost'}>
-              <Search />
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <Item>
-              <ItemHeader className='text-center w-full text-lg font-semibold'>
-                Details over vergadering
-              </ItemHeader>
-              <ItemSeparator />
-              <ItemContent>
-                <ItemTitle>Aanwezigen</ItemTitle>
-                <ItemDescription>
-                  {row.original.members.map((member) => (
-                    <p key={member.id}>
-                      {member.firstName} {member.lastName}
-                    </p>
-                  ))}
-                </ItemDescription>
-              </ItemContent>
-            </Item>
-            <AlertDialogCancel>Sluit</AlertDialogCancel>
-          </AlertDialogContent>
-        </AlertDialog>
-      );
-    },
+    cell: ({ row }) => <ActivityDetailsDialog {...row.original} key={row.id} />,
   },
 ];
 

@@ -6,7 +6,9 @@ const ManagementLeidingLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <main className='container mx-auto w-full h-fit  mt-1'>{children}</main>
+    <section className='container mx-auto w-full h-fit  mt-1'>
+      {children}
+    </section>
   );
 };
 
