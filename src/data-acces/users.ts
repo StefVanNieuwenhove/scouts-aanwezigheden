@@ -4,6 +4,7 @@ import { FormResponse } from '@/types/form';
 import { Roles } from '@/types/role';
 import { UserTable, CreateUser } from '@/types/user';
 import { clerkClient } from '@clerk/nextjs/server';
+import { revalidatePath } from 'next/cache';
 
 export const getUsers = async (): Promise<UserTable[] | null> => {
   try {
@@ -18,7 +19,6 @@ export const getUsers = async (): Promise<UserTable[] | null> => {
         email: user.emailAddresses[0]?.emailAddress ?? 'onbekend',
         role: user.publicMetadata?.role as Roles,
       }));
-    console.log(result);
 
     return result
       .sort((a, b) => a.firstName.localeCompare(b.firstName))
@@ -41,6 +41,9 @@ export const createUser = async (user: CreateUser): Promise<FormResponse> => {
         role: user.role,
       },
     });
+
+    revalidatePath('/management/leiding');
+
     return {
       status: 'success',
       message: 'Succesvol aangemaakt',
@@ -48,5 +51,19 @@ export const createUser = async (user: CreateUser): Promise<FormResponse> => {
   } catch (error) {
     console.error('Error creating user:', error);
     throw new Error('Failed to create user.');
+  }
+};
+
+export const deleteUser = async (id: string): Promise<FormResponse> => {
+  try {
+    const response = await clerkClient.users.deleteUser(id);
+    revalidatePath('/management/leiding');
+    return {
+      status: 'success',
+      message: 'Succesvol verwijderd',
+    };
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    throw new Error('Failed to delete user.');
   }
 };

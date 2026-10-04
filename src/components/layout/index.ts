@@ -5,3 +5,4 @@ export { default as DeleteAllActivitiesButton } from './DeleteAllActivitiesButto
 export { default as deleteAllMembersButton } from './DeleteAllMemebersButton';
 export { default as ActivityDetailsDialog } from './ActivityDetailsDialog';
 export { default as DefaultCard } from './DefaultCard';
+export { default as ActionsButton } from './ActionsButton';
