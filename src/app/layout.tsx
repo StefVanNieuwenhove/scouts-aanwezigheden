@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import './globals.css';
+import { Link } from 'lucide-react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -37,6 +38,12 @@ export default function RootLayout({
           {/* vercel analytics */}
           <Analytics />
           <SpeedInsights />
+          <footer>
+            <p className='text-center text-xs text-slate-500 dark:text-slate-400'>
+              © {new Date().getFullYear()} Scouts Ter Alwina. All rights
+              reserved - Made by SVN Consulting.
+            </p>
+          </footer>
         </body>
       </html>
     </ClerkProvider>
