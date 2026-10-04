@@ -20,6 +20,7 @@ import { ChartConfig } from '../ui/chart';
 import { Button } from '../ui/button';
 import { FileText } from 'lucide-react';
 import Link from 'next/link';
+import { DefaultCard } from './DefaultCard';
 
 type OverviewCardProps = {
   group: Group;
@@ -30,10 +31,10 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
   const activities = await getActivitiesByGroup(group);
 
   const membersAbove50 = members?.filter(
-    (member) => member.activities.length >= activities.length / 2
+    (member) => member.activities.length >= activities.length / 2,
   );
   const membersBelow50 = members?.filter(
-    (member) => member.activities.length < activities.length / 2
+    (member) => member.activities.length < activities.length / 2,
   );
 
   const evaluationChartData: EvaluationChartData[] = [
@@ -68,7 +69,7 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
         count: activity.members.length,
         fill: 'hsl(var(--primary))',
       };
-    }
+    },
   );
 
   const yearOverviewChartConfig: ChartConfig = {
@@ -120,10 +121,15 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
                   config={evaluationChartConfig}
                 />
               ) : (
-                <p>
-                  Geen data te tonen, maak vergaderingen aan om resultaat te
-                  bekijken
-                </p>
+                <div className='flex flex-col items-center justify-center gap-2'>
+                  <DefaultCard
+                    text='Geen data te tonen omdat er geen veragaderingen zijn. Maak vergaderingen aan om resultaat te bekijken'
+                    link={{
+                      href: `/${group.toLowerCase()}/create`,
+                      text: 'Maak een vergadering',
+                    }}
+                  />
+                </div>
               )}
             </TabsContent>
             <TabsContent value='year' className='pt-2'>
@@ -133,10 +139,15 @@ const OverviewMembers = async ({ members, group }: OverviewCardProps) => {
                   config={yearOverviewChartConfig}
                 />
               ) : (
-                <p>
-                  Geen data te tonen, maak vergaderingen aan om resultaat te
-                  bekijken
-                </p>
+                <div className='flex flex-col items-center justify-center gap-2'>
+                  <DefaultCard
+                    text='Geen data te tonen omdat er geen veragaderingen zijn. Maak vergaderingen aan om resultaat te bekijken'
+                    link={{
+                      href: `/${group.toLowerCase()}/create`,
+                      text: 'Maak een vergadering',
+                    }}
+                  />
+                </div>
               )}
             </TabsContent>
           </Tabs>

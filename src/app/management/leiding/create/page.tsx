@@ -1,7 +1,9 @@
-import React from 'react';
+'use client';
+
+import { LeidingFormUpload } from '@/components/forms';
 
 const LeidingCreatePage = () => {
-  return <div>LeidingCreatepage</div>;
+  return <LeidingFormUpload />;
 };
 
 export default LeidingCreatePage;

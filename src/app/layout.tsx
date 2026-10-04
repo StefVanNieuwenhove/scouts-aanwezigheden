@@ -5,11 +5,7 @@ import { Navbar } from '@/components/navigation';
 import { Toaster } from '@/components/ui/sonner';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-import {
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
-} from '@/components/ui/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });

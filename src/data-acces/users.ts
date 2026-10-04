@@ -1,7 +1,8 @@
 'use server';
 
+import { FormResponse } from '@/types/form';
 import { Roles } from '@/types/role';
-import { UserTable } from '@/types/user';
+import { UserTable, CreateUser } from '@/types/user';
 import { clerkClient } from '@clerk/nextjs/server';
 
 export const getUsers = async (): Promise<UserTable[] | null> => {
@@ -28,11 +29,24 @@ export const getUsers = async (): Promise<UserTable[] | null> => {
   }
 };
 
-export const CreateUser = async (user: any) => {
+export const createUser = async (user: CreateUser): Promise<FormResponse> => {
   try {
-    return null;
+    const response = await clerkClient.users.createUser({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: `${user.firstName}${user.lastName}`.replaceAll(' ', ''),
+      emailAddress: [user.email],
+      password: user.password,
+      publicMetadata: {
+        role: user.role,
+      },
+    });
+    return {
+      status: 'success',
+      message: 'Succesvol aangemaakt',
+    };
   } catch (error) {
     console.error('Error creating user:', error);
-    throw new Error('Failed to create user');
+    throw new Error('Failed to create user.');
   }
 };

@@ -8,3 +8,11 @@ export type UserTable = {
   email: string;
   role: Roles;
 };
+
+export type CreateUser = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: Exclude<Roles, 'ADMIN'>;
+};

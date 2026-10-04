@@ -6,7 +6,6 @@ import React from 'react';
 
 const LeidingOverviewPage = async () => {
   const users = await getUsers();
-  //console.log(users);
 
   return (
     <>
@@ -17,7 +16,7 @@ const LeidingOverviewPage = async () => {
           groupFilter={false}
           craeteButton={
             <Button variant={'link'} className='border border-primary'>
-              <a href='/management/leiding/create'>Nieuw lid toevoegen</a>
+              <a href='/management/leiding/create'>Nieuwe leiding toevoegen</a>
             </Button>
           }
         />
