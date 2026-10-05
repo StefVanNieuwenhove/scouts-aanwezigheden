@@ -21,20 +21,29 @@ import {
   TableRow,
 } from '../ui/table';
 import { Button } from '../ui/button';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import GroupFilter from './GroupFilter';
 import { convertToGroup } from '@/lib/utils';
+import { toast } from 'sonner';
+import { deleteAllMembers } from '@/data-acces/members';
+import TablePagination from './TablePagination';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select';
+import { SelectValue } from '@radix-ui/react-select';
 
 type DataTableProps<TData, TValue> = {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
   groupFilter: boolean;
+  deleteAll?: ReactNode;
+  craeteButton?: ReactNode;
 };
 
 const DataTable = <TData, TValue>({
   data,
   columns,
   groupFilter = false,
+  deleteAll,
+  craeteButton,
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -57,12 +66,18 @@ const DataTable = <TData, TValue>({
         pageSize: 10,
       },
     },
+    autoResetPageIndex: false,
   });
+
   return (
     <>
-      {groupFilter && (
-        <div className='my-1 w-full flex justify-end'>
-          <section className='w-1/3'>
+      <div className='my-1 w-full flex justify-between items-center'>
+        <section className='flex items-center gap-2'>
+          {deleteAll}
+          {craeteButton}
+        </section>
+        <section className='w-1/3'>
+          {groupFilter && (
             <GroupFilter
               onChange={(value: string) => {
                 if (value === 'all') table.resetColumnFilters(true);
@@ -72,9 +87,9 @@ const DataTable = <TData, TValue>({
                     ?.setFilterValue(convertToGroup(value));
               }}
             />
-          </section>
-        </div>
-      )}
+          )}
+        </section>
+      </div>
       <Table className='border dark:border-none'>
         <TableHeader className='bg-primary'>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -88,7 +103,7 @@ const DataTable = <TData, TValue>({
                       ? null
                       : (flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         ) as any)}
                   </TableHead>
                 );
@@ -118,22 +133,39 @@ const DataTable = <TData, TValue>({
         </TableBody>
         <TableFooter className='bg-none'>
           <TableRow>
-            <TableCell colSpan={columns.length} className='text-right'>
-              <div>
-                <Button
-                  variant='outline'
-                  size='sm'
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}>
-                  Previous
-                </Button>
-                <Button
-                  variant='outline'
-                  size='sm'
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}>
-                  Next
-                </Button>
+            <TableCell colSpan={columns.length}>
+              <div className='w-full flex items-center justify-between'>
+                <p>{table.getFilteredRowModel().rows.length} resultaten</p>
+                <div className='flex items-center gap-2'>
+                  <Select
+                    defaultValue={table
+                      .getState()
+                      .pagination.pageSize.toString()}
+                    onValueChange={(value) => {
+                      table.setPageSize(Number(value));
+                    }}>
+                    <SelectTrigger>
+                      <SelectValue placeholder='Leden per pagina ' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[10, 20, 30, 40, 50].map((size) => (
+                        <SelectItem key={size} value={size.toString()}>
+                          {size}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <TablePagination
+                    nextPage={table.nextPage}
+                    previousPage={table.previousPage}
+                    firstPage={table.firstPage}
+                    lastPage={table.lastPage}
+                    canNextPage={table.getCanNextPage()}
+                    canPreviousPage={table.getCanPreviousPage()}
+                    pageIndex={table.getState().pagination.pageIndex}
+                    pageCount={table.getPageCount()}
+                  />
+                </div>
               </div>
             </TableCell>
           </TableRow>

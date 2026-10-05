@@ -5,4 +5,5 @@ export type Roles =
   | 'GIVERS'
   | 'JINS'
   | 'GROEPSLEIDING'
-  | 'ADMIN';
+  | 'ADMIN'
+  | 'UNKNOWN';

@@ -6,6 +6,15 @@ import { AddActivityProps, FormResponse } from '@/types/form';
 import { Group } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
+export const getActivities = async (): Promise<ActivityWithMembers[]> => {
+  const activities = await prisma.activity.findMany({
+    include: {
+      members: true,
+    },
+  });
+  return activities;
+};
+
 export const getActivityById = async (
   id: string,
   incudeMembers: boolean = true
@@ -202,6 +211,23 @@ export const editActivity = async (
     return {
       status: 'error',
       message: `${error}`,
+    };
+  }
+};
+
+export const deleteAllActivities = async (): Promise<FormResponse> => {
+  try {
+    await prisma.activity.deleteMany({});
+    revalidatePath('/');
+
+    return {
+      status: 'success',
+      message: 'Alle activiteiten succesvol verwijderd',
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      message: 'Er is een fout opgetreden',
     };
   }
 };

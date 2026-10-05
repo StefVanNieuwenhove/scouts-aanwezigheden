@@ -63,7 +63,9 @@ const MembersFormUpload = () => {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='pb-10'>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className='pb-10 border rounded-md p-5 bg-white/50 dark:bg-gray-900/50 shadow-md space-y-4'>
           <FormField
             control={form.control}
             name='firstName'

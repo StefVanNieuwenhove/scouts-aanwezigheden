@@ -33,7 +33,7 @@ export default async function Home() {
             <OverviewCard
               group={Group.JONGGIVERS}
               members={members?.filter(
-                (member) => member.group === 'JONGGIVERS'
+                (member) => member.group === 'JONGGIVERS',
               )}
             />
           </Protect>

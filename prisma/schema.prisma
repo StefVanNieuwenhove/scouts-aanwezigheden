@@ -38,6 +38,35 @@ model Activity {
   @@map("activities")
 }
 
+model User {
+  id                      String        @id @default(uuid())
+  clerkId                 String        @unique
+  email                   String?       @unique
+  passwordEnabled         Boolean
+  totpEnabled             Boolean
+  backupCodeEnabled       Boolean
+  twoFactorEnabled        Boolean
+  banned                  Boolean
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+  imageUrl                String?
+  hasImage                Boolean
+  primaryEmailAddressId   String?
+  primaryPhoneNumberId    String?
+  primaryWeb3WalletId     String?
+  lastSignInAt            BigInt?
+  externalId              String?
+  username                String?
+  firstName               String?
+  lastName                String?
+  publicMetadata          Json
+  privateMetadata         Json
+  unsafeMetadata          Json
+  lastActiveAt            BigInt?
+  createOrganizationEnabled Boolean
+}
+
+
 enum Group {
   KAPOENEN
   WOUTERS

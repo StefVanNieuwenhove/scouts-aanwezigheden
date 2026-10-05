@@ -3,3 +3,4 @@ export { default as UpdateActivity } from './UpdateActivity';
 export { default as MembersFormUpload } from './MembersFormUpload';
 export { default as MemberFileUpload } from './MemberFileUpload';
 export { default as EditActivity } from './EditActivity';
+export { default as LeidingFormUpload } from './LeidingFormUpload';
