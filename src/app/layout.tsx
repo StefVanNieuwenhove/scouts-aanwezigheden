@@ -7,7 +7,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import './globals.css';
-import { Link } from 'lucide-react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,7 +27,7 @@ export default function RootLayout({
         <body
           className={`${inter.className} antialiased max-w-full min-h-screen flex flex-col`}>
           <SidebarProvider>
-            <main className='w-full flex-grow'>
+            <main className='w-full flex-grow ml-0 md:ml-7'>
               <Navbar />
               {children}
             </main>
@@ -38,7 +37,7 @@ export default function RootLayout({
           {/* vercel analytics */}
           <Analytics />
           <SpeedInsights />
-          <footer>
+          <footer className='w-full flex-shrink-0 p-4 bg-base-100 border-t border-primary/20'>
             <p className='text-center text-xs text-slate-500 dark:text-slate-400'>
               © {new Date().getFullYear()} Scouts Ter Alwina. All rights
               reserved - Made by SVN Consulting.

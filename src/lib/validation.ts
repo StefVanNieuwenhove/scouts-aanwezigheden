@@ -19,6 +19,7 @@ export const addLeidingValidation = z
     password: passwordSchema,
     checkPassword: passwordSchema,
     group: z.nativeEnum(Group).default(Group.UNKNOWN),
+    sendInvite: z.boolean().default(false),
   })
   .refine((data) => data.password === data.checkPassword, {
     message: 'Passwords do not match.',

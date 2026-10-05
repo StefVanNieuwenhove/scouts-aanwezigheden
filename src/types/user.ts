@@ -15,4 +15,5 @@ export type CreateUser = {
   email: string;
   password: string;
   role: Exclude<Roles, 'ADMIN'>;
+  sendInvite: boolean;
 };

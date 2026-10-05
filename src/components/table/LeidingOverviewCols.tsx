@@ -2,11 +2,13 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '../ui/button';
-import { ArrowUpDown, Trash } from 'lucide-react';
+import { ArrowUpDown, Trash, RotateCcwKey } from 'lucide-react';
 import { UserTable } from '@/types/user';
 import { ActionsButton } from '../layout';
 import { deleteUser } from '@/data-acces/users';
 import { toast } from 'sonner';
+
+const handleRenewPassword = async (userId: string) => {};
 
 const handleDeleteUser = async (userId: string) => {
   const response = await deleteUser(userId);
@@ -66,6 +68,7 @@ const LeidingOverviewCols: ColumnDef<UserTable>[] = [
   },
   {
     accessorKey: 'actions',
+    header: '',
     cell: ({ row }) => {
       return (
         <div>

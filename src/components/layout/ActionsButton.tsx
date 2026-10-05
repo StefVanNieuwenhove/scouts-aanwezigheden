@@ -2,11 +2,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 
 export type ActionsButtonProps = {
   actions: {
@@ -30,13 +31,16 @@ const ActionsButton = ({ actions }: ActionsButtonProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {actions.map((action, index) => (
-          <DropdownMenuItem
-            key={index}
-            onClick={() => handleActionClick(action.onClick)}
-            className={`flex items-center gap-2 ${action.isDestructive ? 'text-destructive' : ''}`}>
-            {action.icon && <span>{action.icon}</span>}
-            <span>{action.label}</span>
-          </DropdownMenuItem>
+          <Fragment key={index}>
+            <DropdownMenuItem
+              key={index}
+              onClick={() => handleActionClick(action.onClick)}
+              className={`flex items-center gap-2 ${action.isDestructive ? 'text-destructive' : ''}`}>
+              {action.icon && <span>{action.icon}</span>}
+              <span>{action.label}</span>
+            </DropdownMenuItem>
+            {index < actions.length - 1 && <DropdownMenuSeparator />}
+          </Fragment>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>

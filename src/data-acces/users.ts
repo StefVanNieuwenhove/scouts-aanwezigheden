@@ -5,6 +5,7 @@ import { Roles } from '@/types/role';
 import { UserTable, CreateUser } from '@/types/user';
 import { clerkClient } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
+import { env } from '@/env';
 
 export const getUsers = async (): Promise<UserTable[] | null> => {
   try {
@@ -42,6 +43,14 @@ export const createUser = async (user: CreateUser): Promise<FormResponse> => {
       },
     });
 
+    if (user.sendInvite) {
+      /* const invite = await sendInvite(user.email);
+      if (invite.status === 'error') {
+        console.error('Error sending invite:', invite.message);
+        throw new Error('Failed to send invite.');
+      } */
+    }
+
     revalidatePath('/management/leiding');
 
     return {
@@ -51,6 +60,27 @@ export const createUser = async (user: CreateUser): Promise<FormResponse> => {
   } catch (error) {
     console.error('Error creating user:', error);
     throw new Error('Failed to create user.');
+  }
+};
+
+export const sendInvite = async (email: string): Promise<FormResponse> => {
+  try {
+    const response = await clerkClient.invitations.createInvitation({
+      emailAddress: email,
+    });
+
+    if (response === null) {
+      console.error('Error sending invite:', response);
+      throw new Error('Failed to send invite.');
+    }
+
+    return {
+      status: 'success',
+      message: 'Succesvol uitgenodigd',
+    };
+  } catch (error) {
+    console.error('Error sending invite:', error);
+    throw new Error('Failed to send invite.');
   }
 };
 

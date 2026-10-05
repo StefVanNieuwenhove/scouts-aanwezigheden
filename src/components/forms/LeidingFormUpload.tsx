@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import { Switch } from '../ui/switch';
 import { capitalize, generatePassword } from '@/lib/utils';
 import { MdOutlinePassword } from 'react-icons/md';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
@@ -40,6 +43,7 @@ const LeidingFormUpload = () => {
       password: '',
       checkPassword: '',
       group: Group.KAPOENEN,
+      sendInvite: false,
     },
   });
 
@@ -52,6 +56,7 @@ const LeidingFormUpload = () => {
         email: data.email,
         password: data.password,
         role: data.group,
+        sendInvite: data.sendInvite,
       });
       if (result.status === 'error') {
         toast.error(result.message);
@@ -264,6 +269,29 @@ const LeidingFormUpload = () => {
               </FormItem>
             )}
           />
+          {/* <FormField
+            control={form.control}
+            name='sendInvite'
+            render={({ field }) => (
+              <FormItem className='max-w-prose mx-auto'>
+                <FormLabel htmlFor={field.name}>
+                  Stuur een uitnodigingsmail
+                </FormLabel>
+                <FormDescription className='text-xs'>
+                  Stuur een uitnodigingsmail naar de gebruiker
+                </FormDescription>
+                <FormControl>
+                  <Switch
+                    id={field.name}
+                    className='mt-2'
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
           <span className='max-w-prose mx-auto flex justify-center gap-2 mt-5'>
             <Button type='reset' variant={'outline'} className='w-full'>
               Reset
