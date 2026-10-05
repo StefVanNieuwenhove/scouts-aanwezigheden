@@ -20,7 +20,6 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import logo from '/Users/stefvannieuwenhove/Documents/projects/scouts-aanwezigheden/public/images/scouts.jpg';
 import { useSignIn } from '@clerk/nextjs';
 
 const SignInPage = () => {
@@ -64,7 +63,12 @@ const SignInPage = () => {
           className='w-full md:max-w-prose border border-primary rounded-md px-10 py-5 space-y-5 h-fit'>
           <div className='w-full pb-2 flex flex-col items-center justify-center space-y-2 border-b border-primary'>
             <div className='w-full flex flex-col md:flex-row items-center justify-between space-y-2'>
-              <Image src={logo} alt='logo' width={100} height={100} />
+              <Image
+                src={'/images/scouts.jpg'}
+                alt='logo'
+                width={100}
+                height={100}
+              />
               <H2>Scouts Ter Alwina - Login</H2>
             </div>
 
