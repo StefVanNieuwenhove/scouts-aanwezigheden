@@ -80,11 +80,17 @@ const DataTable = <TData, TValue>({
           {groupFilter && (
             <GroupFilter
               onChange={(value: string) => {
-                if (value === 'all') table.resetColumnFilters(true);
-                else
-                  table
-                    .getColumn('group')
-                    ?.setFilterValue(convertToGroup(value));
+                const groupColumn = table.getColumn('group');
+
+                if (!groupColumn) return;
+
+                if (value === 'all') {
+                  groupColumn.setFilterValue(undefined);
+                } else {
+                  groupColumn.setFilterValue(convertToGroup(value));
+                }
+
+                table.setPageIndex(0);
               }}
             />
           )}

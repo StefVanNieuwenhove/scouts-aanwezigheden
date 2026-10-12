@@ -48,6 +48,9 @@ const MembersOverviewCols: ColumnDef<MemberTable>[] = [
         </Button>
       );
     },
+    filterFn: (row, columnId, filterValue) => {
+      return row.getValue(columnId) === filterValue;
+    },
   },
   {
     accessorKey: '',
