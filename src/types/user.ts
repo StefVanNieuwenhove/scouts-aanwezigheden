@@ -13,7 +13,6 @@ export type CreateUser = {
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
   role: Exclude<Roles, 'ADMIN'>;
   sendInvite: boolean;
 };
