@@ -26,9 +26,7 @@ import {
   SelectValue,
 } from '../ui/select';
 import { Switch } from '../ui/switch';
-import { capitalize, generatePassword } from '@/lib/utils';
-import { MdOutlinePassword } from 'react-icons/md';
-import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import { capitalize } from '@/lib/utils';
 import { createUser } from '@/data-acces/users';
 
 const LeidingFormUpload = () => {
@@ -40,10 +38,8 @@ const LeidingFormUpload = () => {
       firstname: '',
       lastname: '',
       email: '',
-      password: '',
-      checkPassword: '',
       group: Group.KAPOENEN,
-      sendInvite: false,
+      sendInvite: true,
     },
   });
 
@@ -54,7 +50,6 @@ const LeidingFormUpload = () => {
         firstName: capitalize(data.firstname),
         lastName: capitalize(data.lastname),
         email: data.email,
-        password: data.password,
         role: data.group,
         sendInvite: data.sendInvite,
       });
@@ -69,20 +64,6 @@ const LeidingFormUpload = () => {
       form.reset();
       setLoading(false);
     }
-  };
-
-  const handleGeneratePassword = () => {
-    const password = generatePassword();
-
-    form.setValue('password', password, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-
-    form.setValue('checkPassword', password, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
   };
 
   return (
@@ -162,79 +143,6 @@ const LeidingFormUpload = () => {
           />
           <FormField
             control={form.control}
-            name='password'
-            render={({ field }) => (
-              <FormItem className='max-w-prose mx-auto'>
-                <FormLabel htmlFor={field.name}>Wachtwoord</FormLabel>
-                <FormControl>
-                  <div className='relative'>
-                    <Input
-                      {...field}
-                      placeholder='*******'
-                      type='password'
-                      autoFocus
-                    />
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          type='button'
-                          variant='ghost'
-                          size='icon'
-                          className='absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8'
-                          onClick={handleGeneratePassword}>
-                          <MdOutlinePassword />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Maak een nieuw wachtwoord</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
-                </FormControl>
-                <div className='w-full flex items-center justify-between gap-2'>
-                  <FormDescription
-                    className={`text-xs ${
-                      form.formState.errors.password ? 'text-red-500' : ''
-                    }`}>
-                    Het wachtwoord van de leiding
-                  </FormDescription>
-                  <FormMessage>
-                    {form.formState.errors.password?.message}
-                  </FormMessage>
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='checkPassword'
-            render={({ field }) => (
-              <FormItem className='max-w-prose mx-auto'>
-                <FormLabel htmlFor={field.name}>Herhaal wachtwoord</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder='*******'
-                    type='password'
-                    autoFocus
-                  />
-                </FormControl>
-                <div className='w-full flex items-center justify-between gap-2'>
-                  <FormDescription
-                    className={`text-xs ${
-                      form.formState.errors.checkPassword ? 'text-red-500' : ''
-                    }`}>
-                    Het herhaalde wachtwoord van de leiding
-                  </FormDescription>
-                  <FormMessage>
-                    {form.formState.errors.checkPassword?.message}
-                  </FormMessage>
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name='group'
             render={({ field }) => (
               <FormItem className='max-w-prose mx-auto'>
@@ -269,7 +177,7 @@ const LeidingFormUpload = () => {
               </FormItem>
             )}
           />
-          {/* <FormField
+          <FormField
             control={form.control}
             name='sendInvite'
             render={({ field }) => (
@@ -291,7 +199,7 @@ const LeidingFormUpload = () => {
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
           <span className='max-w-prose mx-auto flex justify-center gap-2 mt-5'>
             <Button type='reset' variant={'outline'} className='w-full'>
               Reset

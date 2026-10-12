@@ -11,20 +11,13 @@ const passwordSchema = z
   })
   .trim();
 
-export const addLeidingValidation = z
-  .object({
-    firstname: z.string().trim().min(1, 'Voornaam is verplicht'),
-    lastname: z.string().trim().min(1, 'Familienaam is verplicht'),
-    email: z.string().email('Ongeldig e-mailadres'),
-    password: passwordSchema,
-    checkPassword: passwordSchema,
-    group: z.nativeEnum(Group).default(Group.UNKNOWN),
-    sendInvite: z.boolean().default(false),
-  })
-  .refine((data) => data.password === data.checkPassword, {
-    message: 'Passwords do not match.',
-    path: ['checkPassword'],
-  });
+export const addLeidingValidation = z.object({
+  firstname: z.string().trim().min(1, 'Voornaam is verplicht'),
+  lastname: z.string().trim().min(1, 'Familienaam is verplicht'),
+  email: z.string().email('Ongeldig e-mailadres'),
+  group: z.nativeEnum(Group).default(Group.UNKNOWN),
+  sendInvite: z.boolean().default(false),
+});
 
 export const addActivityValidation = z.object({
   name: z.string().trim().min(1, 'Naam is verplicht'),

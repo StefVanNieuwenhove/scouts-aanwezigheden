@@ -32,24 +32,34 @@ export const getUsers = async (): Promise<UserTable[] | null> => {
 
 export const createUser = async (user: CreateUser): Promise<FormResponse> => {
   try {
-    const response = await clerkClient.users.createUser({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      username: `${user.firstName}${user.lastName}`.replaceAll(' ', ''),
-      emailAddress: [user.email],
-      password: user.password,
+    // const response = await clerkClient.users.createUser({
+    //   firstName: user.firstName,
+    //   lastName: user.lastName,
+    //   username: `${user.firstName}${user.lastName}`.replaceAll(' ', ''),
+    //   emailAddress: [user.email],
+    //   publicMetadata: {
+    //     role: user.role,
+    //   },
+    // });
+
+    // if (user.sendInvite) {
+    //   const invite = await sendInvite(user.email);
+    //   if (invite.status === 'error') {
+    //     console.error('Error sending invite:', invite.message);
+    //     throw new Error('Failed to send invite.');
+    //   }
+    // }
+
+    const invitation = await clerkClient.invitations.createInvitation({
+      emailAddress: user.email.trim().toLocaleLowerCase(),
       publicMetadata: {
         role: user.role,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
       },
+      notify: user.sendInvite,
     });
-
-    if (user.sendInvite) {
-      /* const invite = await sendInvite(user.email);
-      if (invite.status === 'error') {
-        console.error('Error sending invite:', invite.message);
-        throw new Error('Failed to send invite.');
-      } */
-    }
 
     revalidatePath('/management/leiding');
 
